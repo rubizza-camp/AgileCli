@@ -44,3 +44,5 @@ $ gem install agile-cli
 $ agile
 
 ```
+
+[Our server](https://ancient-brook-87232.herokuapp.com/)
