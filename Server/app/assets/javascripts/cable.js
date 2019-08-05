@@ -7,7 +7,6 @@
 
 (function() {
   this.App || (this.App = {}); // jshint ignore:line
-
   App.cable = ActionCable.createConsumer();
 
 }).call(this);
