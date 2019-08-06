@@ -16,7 +16,7 @@
 # policy.report_uri "/csp-violation-report-endpoint"
 # end
 # If you are using UJS then enable automatic nonce generation
-# Rails.application.config.content_security_policy_nonce_generator = -> request 
+# Rails.application.config.content_security_policy_nonce_generator = -> request
 # { SecureRandom.base64(16) }
 # Report CSP violations to a specified URI
 # For further information see the following documentation:
