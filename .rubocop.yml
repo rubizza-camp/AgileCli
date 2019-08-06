@@ -28,7 +28,7 @@ AllCops:
     Exclude:
     - 'Server/app/views/**/*'
     - 'Server/app/assets/**/*'
-    - 'Server/app/assets/javascripts/*'
+    - 'Server/app/assets/javascripts/cable.js'
     - 'Server/bin/*'
     - 'Server/db/schema.rb'
     - 'Server/db/migrate/*'
