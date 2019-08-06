@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
 
-require File.dirname(__FILE__) + '/../lib/agile.rb'
+require_relative "../lib/agile"
 
 Agile::CLI.start

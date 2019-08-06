@@ -1,17 +1,16 @@
-
-# lib = File.expand_path("../lib", __FILE__)
-# $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-# require "agile/constants"
+$LOAD_PATH.unshift File.expand_path('../lib', __FILE__)
 
 Gem::Specification.new do |spec|
   spec.name          = "agile-cli"
-  spec.version       = '0.0.1'
+  spec.version       = '0.0.2'
   spec.authors       = ["rubizza-camp"]
   spec.licenses      = ['MIT']
   spec.summary       = %q{Command line instrument for agile.}
   spec.description   = %q{Command line instrument for agile.}
   spec.homepage      = "https://github.com/rubizza-camp/AgileCli"
-  spec.files       = ["lib/"]
+  spec.files         = `git ls-files`.split($\)
+  spec.require_paths = ['lib']
+  spec.executables   = ['agile']
 
   spec.add_dependency 'thor'
 
