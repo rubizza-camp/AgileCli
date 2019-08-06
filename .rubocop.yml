@@ -1,10 +1,39 @@
+Rails:
+  Enabled: true
+
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Metrics/LineLength:
+  Max: 120
 
 Style/Documentation:
   Enabled: false
 
+Metrics/MethodLength:
+  Max: 30
 
-Metrics/LineLength:
-  Max: 100
+# Single quotes being faster is hardly measurable and only affects parse time.
+# Enforcing double quotes reduces the times where you need to change them
+# when introducing an interpolation. Use single quotes only if their semantics
+# are needed.  
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
 
+# We do not need to support Ruby 1.9, so this is good to use.
+Style/SymbolArray:
+  Enabled: true
+
+AllCops:
+    Exclude:
+    - 'app/views/**/*'
+    - 'bin/*'
+    - 'db/schema.rb'
+    - 'db/migrate/*'
+    - 'log/**/*'
+    - 'node_modules/**/*'
+    - 'public/**/*'
+    - 'scripts/**/*'
+    - 'vendor/**/*'
+    - 'tmp/**/*'
+    - '.git/**/*'
