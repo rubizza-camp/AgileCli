@@ -27,7 +27,10 @@ Style/SymbolArray:
 AllCops:
     Exclude:
     - 'app/views/**/*'
+<<<<<<< HEAD
     - 'app/assets/**/*'
+=======
+>>>>>>> 9b0d599... Update .rubocop.yml
     - 'bin/*'
     - 'db/schema.rb'
     - 'db/migrate/*'

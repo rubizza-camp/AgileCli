@@ -6,7 +6,7 @@
 //= require_tree ./channels
 
 (function() {
-  this.App || (this.App = {});
+  this.App || (this.App = {}); // jshint ignore:line
 
   App.cable = ActionCable.createConsumer();
 
