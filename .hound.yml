@@ -8,5 +8,5 @@ reek:
 
   config_file: .reek.yml
 
-javascript:
+jshint:
   enabled: false
