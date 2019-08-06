@@ -27,6 +27,7 @@ Style/SymbolArray:
 AllCops:
     Exclude:
     - 'app/views/**/*'
+    - 'app/assets/**/*'
     - 'bin/*'
     - 'db/schema.rb'
     - 'db/migrate/*'
