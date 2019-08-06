@@ -8,3 +8,5 @@ reek:
 
   config_file: .reek.yml
 
+javascript:
+  enabled: false
