@@ -1,7 +1,6 @@
 require "thor"
-require_relative "agile/commands/hello"
-require_relative "agile/commands/version"
-require_relative "agile/constants"
+require "agile/constants"
+Dir[File.join(__dir__, "agile/commands", "*.rb")].each { |file| require file }
 
 module Agile
   class CLI < Thor
