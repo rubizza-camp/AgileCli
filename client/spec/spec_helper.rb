@@ -1,5 +1,10 @@
 require "bundler/setup"
-require "agile/cli"
+require "agile/constants"
+require 'simplecov'
+require 'pry'
+SimpleCov.start
+
+require 'agile'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
