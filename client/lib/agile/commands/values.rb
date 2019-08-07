@@ -1,6 +1,6 @@
 module Agile
   class CLI < Thor
-    desc "values", "Print hello world"
+    desc "values", "Shows core agile values"
     def values
       say "Individuals and interactions over processes and tools"
       say "Working software over comprehensive documentation"
