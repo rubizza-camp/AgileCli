@@ -1,6 +1,6 @@
 module Agile
   class CLI < Thor
-    desc "hello", "Print hello world"
+    desc Rainbow("hello").cornflower, Rainbow("Print hello world").darkgoldenrod
     def hello
       say "Hello world!"
     end

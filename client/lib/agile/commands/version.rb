@@ -1,6 +1,6 @@
 module Agile
   class CLI < Thor
-    desc "version", "Displays the version"
+    desc Rainbow("version").cornflower, Rainbow("Displays the version").darkgoldenrod
     def version
       say "agile #{Agile::VERSION}"
     end
