@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    agile-cli (0.0.5)
+    agile-cli (0.0.6)
       thor
 
 GEM
