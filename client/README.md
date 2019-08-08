@@ -2,9 +2,7 @@
 
 Add this line to your application's Gemfile:
 
-```ruby
-gem 'agile-cli'
-```
+    $ gem 'agile-cli'
 
 And then execute:
 
@@ -16,13 +14,30 @@ Or install it yourself as:
 
 ## Getting Started
 
-### Installation
-    ```
-    $ gem install agile-cli
-
-    ```
 ### Using
-    ```
+
+  If your want to see available commands, use:
+
     $ agile
 
-    ```
+  or
+
+    $ agile help
+
+  ```
+  $ agile
+    agile hello           # Print hello world
+    agile help [COMMAND]  # Describe available commands or one specific command
+    agile values          # Shows core agile values
+    agile version         # Displays the version
+    ...
+
+  ```
+
+  You can see the core values of agile at any time:
+
+    $ agile values
+
+  and principles:
+
+    $ agile principles
