@@ -1,6 +1,6 @@
 module Agile
   class CLI < Thor
-    desc "values", "Shows core agile values"
+    desc Rainbow("values").cornflower, Rainbow("Shows core agile values").darkgoldenrod
     def values
       say File.read("lib/agile/agile_values.txt")
     end

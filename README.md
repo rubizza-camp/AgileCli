@@ -2,17 +2,13 @@
 
 ## Contacts
 
-Telegram
+[Telegram](https://t.me/agilepod)
 
-https://t.me/agilepod
+[GoogleDrive](https://drive.google.com/drive/folders/1N7fMJFVe09M5Cjfta86SCtbWEr_sBdoe)
 
-GoogleDrive
+[Trello](https://trello.com/b/dLrdzQZp/agile-cli)
 
-https://drive.google.com/drive/folders/1N7fMJFVe09M5Cjfta86SCtbWEr_sBdoe
-
-Trello
-
-https://trello.com/b/dLrdzQZp/agile-cli
+[RubyGems.org](https://rubygems.org/gems/agile-cli)
 
 ## Developers
 
@@ -26,11 +22,11 @@ https://trello.com/b/dLrdzQZp/agile-cli
 
 ## Schedule
 
-* Standup - 11:00, daily
-* Retrospective - 10:00, Monday
-* Backlog - 11:15 - 13:00, Thurshday
+* Daily Scram - 11:00, Daily
+* Sprint Retrospective - 10:00, Monday
+* Sprint Planning - 12:00 - 13:00, Monday
+* Sprint Review - 11:15 - 13:00, Thurshday
 * Demo - 10:00, Saturday
-* Estimate - 12:00 - 13:00
 
 ## Getting Started
 

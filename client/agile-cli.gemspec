@@ -13,13 +13,16 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
   spec.executables   = ["agile"]
 
+  spec.add_dependency "rainbow"
   spec.add_dependency "thor"
 
   spec.add_development_dependency "bundler", "~> 1.17"
+  spec.add_development_dependency "factory_bot", "~> 5.0.2"
   spec.add_development_dependency "pry"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "reek"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "rubocop"
+  spec.add_development_dependency "timecop", "~> 0.9.1"
   spec.add_development_dependency "simplecov"
 end
