@@ -8,7 +8,7 @@ RSpec.describe Agile::CLI do
       allow(cli).to receive(:say).with("Hello world!")
     end
 
-    it "has a version number" do
+    it "greets you" do
       cli.hello
 
       expect(cli).to have_received(:say).with("Hello world!")

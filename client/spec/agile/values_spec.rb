@@ -8,7 +8,7 @@ RSpec.describe Agile::CLI do
       allow(cli).to receive(:say).with(File.read("lib/agile/agile_values.txt"))
     end
 
-    it "has a version number" do
+    it "returns agile values" do
       cli.values
       expect(cli).to have_received(:say).with(File.read("lib/agile/agile_values.txt"))
     end
