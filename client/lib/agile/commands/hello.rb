@@ -1,8 +1,8 @@
 module Agile
   class CLI < Thor
-    desc Rainbow("hello").yellow, "Print hello world"
+    desc Rainbow("hello").cornflower, Rainbow("Print hello world").darkgoldenrod
     def hello
-      say set_color "Hello world!", :yellow
+      say "Hello world!"
     end
   end
 end

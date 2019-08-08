@@ -12,13 +12,13 @@ module Agile
         if defined?(@package_name) && @package_name
           shell.say "#{@package_name} commands:"
         else
-          shell.say Rainbow("Commands:").green
+          shell.say Rainbow("Commands:").whitesmoke
         end
 
         shell.print_table(list, :indent => 2, :truncate => true)
         shell.say
         class_options_help(shell)
-        shell.say 'All commands can be run with -h (or --help) for more information.'
+        shell.say Rainbow('All commands can be run with -h (or --help) for more information.').whitesmoke
       end
     end
   end
