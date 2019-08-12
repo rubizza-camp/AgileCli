@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    agile-cli (0.0.5)
+    agile-cli (0.0.7)
       rainbow (~> 3.0.0)
       thor (~> 0.20.3)
 

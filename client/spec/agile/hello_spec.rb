@@ -1,5 +1,3 @@
-require "agile/commands/hello"
-
 RSpec.describe Agile::CLI do
   describe "#hello" do
     subject(:cli) { described_class.new }
