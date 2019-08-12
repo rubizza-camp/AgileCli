@@ -13,10 +13,6 @@
 <!--- If fixing a bug, there should be an issue describing it with steps to reproduce -->
 <!--- Please link to the issue here: -->
 
-## Motivation and Context
-
-<!--- Why is this change required? What problem does it solve? -->
-
 ## How Has This Been Tested
 
 <!--- Please describe in detail how you tested your changes. -->
@@ -40,6 +36,5 @@
 - [ ] My code follows the code style of this project.
 - [ ] My change requires a change to the documentation.
 - [ ] I have updated the documentation accordingly.
-- [ ] I have read the **CONTRIBUTING** document.
 - [ ] I have added tests to cover my changes.
 - [ ] All new and existing tests passed.

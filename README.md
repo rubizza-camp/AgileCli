@@ -10,11 +10,13 @@
 
 [RubyGems.org](https://rubygems.org/gems/agile-cli)
 
+[Agile-Cli Server](https://github.com/rubizza-camp/AgileCli_Server)
+
 ## Developers
 
 * Sergei Kislak - Product Owner
 * Nick Pridorozhko - Mentor
-* 3485 - Andrew Berendeev - Scrum-Master
+* 3485 - Andrew Berendeev
 * 3684 - Ilya Vasilevich
 * 3498 - Polina Matskevich
 * 3581 - Elizaveta Shved
@@ -22,21 +24,18 @@
 
 ## Schedule
 
-* Daily Scram - 11:00, Daily
-* Sprint Retrospective - 10:00, Monday
-* Sprint Planning - 12:00 - 13:00, Monday
-* Sprint Review - 11:15 - 13:00, Thurshday
-* Demo - 10:00, Saturday
+* Daily Scram - 11:00, Daily;
+* Sprint Retrospective - 10:00, Monday;
+* Sprint Planning - 12:00 - 13:00, Monday;
+* Sprint Review - 11:15 - 13:00, Thurshday;
+* Demo - 10:00, Saturday.
 
 ## Getting Started
 
 ### Installation
 ```
 $ gem install agile-cli
+```
+To view all available commands go to link below:
 
-```
-### Using
-```
-$ agile
-
-```
+[Gem README](https://github.com/rubizza-camp/AgileCli/blob/master/client/README.md)
