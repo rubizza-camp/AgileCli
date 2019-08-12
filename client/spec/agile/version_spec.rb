@@ -1,5 +1,3 @@
-require "agile/commands/version"
-
 RSpec.describe Agile::CLI do
   describe "#version" do
     subject(:cli) { described_class.new }
