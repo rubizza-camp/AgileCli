@@ -1,0 +1,13 @@
+jobs:
+  build:
+   docker:
+      - image: circleci/ruby:2.6.3-node
+        environment:
+          RAILS_ENV: test
+          PGHOST: 127.0.0.1
+          PGUSER: agile
+   working_directory: ~/AgileCli/client
+   steps:
+      - checkout
+      - run: |
+          bundle install
