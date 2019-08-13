@@ -1,3 +1,5 @@
+# :reek:Lint/Syntax
+
 module Agile
   class CLI < Thor
     desc Rainbow("projects SUBCOMMAND ...ARGS").cornflower, Rainbow("Command for work with projects").darkgoldenrod
@@ -7,14 +9,20 @@ module Agile
   end
 
   class Use < Thor
-    #some code
+    def use
+      #some code
+    end
   end
 
   class List < Thor
-    #some code
+    def list
+      #some code
+    end
   end
 
   class Create < Thor
-    #some code
+    def create
+      #some code
+    end
   end
 end
