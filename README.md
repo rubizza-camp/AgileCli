@@ -2,6 +2,13 @@
 
 <img src="https://badge.fury.io/rb/agile-cli.svg" alt="Gem Version" /> <img src="https://img.shields.io/gem/dt/agile-cli.svg?style=flat" />
 
+[![Gem Version](https://badge.fury.io/rb/agile-cli.svg)][gem]
+[![Build Status](https://img.shields.io/gem/dt/agile-cli.svg?style=flat)][gem]
+[![Coverage Status](http://img.shields.io/coveralls/erikhuda/agile-cli.svg)][coveralls]
+
+[gem]: https://rubygems.org/gems/agile-cli
+[coveralls]: https://coveralls.io/r/erikhuda/agile-cli
+
 ## Contacts
 
 [Telegram](https://t.me/agilepod)
