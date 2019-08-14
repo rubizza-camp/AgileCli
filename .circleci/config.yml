@@ -7,7 +7,7 @@ jobs:
           RAILS_ENV: test
           PGHOST: 127.0.0.1
           PGUSER: root
-   working_directory: ~/AgileCli/client
+   working_directory: ~/AgileCli
    steps:
       - checkout
       - restore_cache:
