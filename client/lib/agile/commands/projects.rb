@@ -1,18 +1,15 @@
 # :reek:Lint/Syntax
 
 module Agile
-  class CLI < Thor
-    desc Rainbow("projects SUBCOMMAND ...ARGS").cornflower, Rainbow("Command for work with projects").darkgoldenrod
-    subcommand "list", List
-    subcommand "create", Create
-    subcommand "use", Use
-    subcommand "invite", Invite
-  end
-
   class Use < Thor
     desc "use <project>", "Select current project"
     def use(project)
-      # some code
+      if Project.exists?(name: project)
+        # current_project = project # config
+        say "Your project: #{project}"
+      else
+        say "Such a project does not exist. Try again"
+      end
     end
   end
 
@@ -35,5 +32,13 @@ module Agile
     def invite(github)
       # some code
     end
+  end
+
+  class CLI < Thor
+    desc Rainbow("projects SUBCOMMAND ...ARGS").cornflower, Rainbow("Command for work with projects").darkgoldenrod
+    subcommand "list", List
+    subcommand "create", Create
+    subcommand "use", Use
+    subcommand "invite", Invite
   end
 end
