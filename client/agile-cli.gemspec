@@ -14,6 +14,7 @@ Gem::Specification.new do |spec|
   spec.executables   = ["agile"]
 
   spec.add_dependency "rainbow", "~> 3.0.0"
+  spec.add_dependency "rest-client", "~> 2.0.2"
   spec.add_dependency "thor", "~> 0.20.3"
 
   spec.add_development_dependency "bundler", "~> 2.0.2"
