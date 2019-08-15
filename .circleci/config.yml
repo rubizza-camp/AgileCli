@@ -1,30 +1,29 @@
 version: 2
 jobs:
   build:
-   docker:
+    working_directory: ~/AgileCli/client/
+    docker:
       - image: circleci/ruby:2.6.3-node
         environment:
           RAILS_ENV: test
           PGHOST: 127.0.0.1
           PGUSER: root
-   working_directory: ~/AgileCli/client
-   steps:
+    steps:
       - checkout
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "Gemfile.lock" }}
+            - v1-dependencies-{{ checksum "client/Gemfile.lock" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
-
       - run:
           name: install dependencies
           command: |
-            gem install bundler:2.0.0.pre.1 && bundle install --jobs=4 --retry=3 --path vendor/bundle
+            gem install bundler:2.0.2 && cd client && bundle install --jobs=4 --retry=3 --path client/vendor/bundle
       - save_cache:
           paths:
-            - ./vendor/bundle
-          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+            - ./client/vendor/bundle
+          key: v1-dependencies-{{ checksum "client/Gemfile.lock" }}
       - run:
           name: run rspec
           command: |
-            bundle exec rspec
+            cd client && bundle exec rspec
