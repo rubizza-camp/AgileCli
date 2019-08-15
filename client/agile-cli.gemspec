@@ -15,6 +15,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "rainbow", "~> 3.0.0"
   spec.add_dependency "thor", "~> 0.20.3"
+  spec.add_dependency "terminal-table", "~> 1.8.0"
 
   spec.add_development_dependency "bundler", "~> 2.0.2"
   spec.add_development_dependency "factory_bot", "~> 5.0.2"
