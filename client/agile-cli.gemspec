@@ -13,11 +13,10 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
   spec.executables   = ["agile"]
 
-  spec.add_dependency "nokogiri", "~> 1.10.4"
+  spec.add_dependency "json", "~> 1.8"
   spec.add_dependency "rainbow", "~> 3.0.0"
   spec.add_dependency "rest-client", "~> 2.0.2"
   spec.add_dependency "thor", "~> 0.20.3"
-  spec.add_dependency "json", "~> 1.8"
 
   spec.add_development_dependency "bundler", "~> 2.0.2"
   spec.add_development_dependency "factory_bot", "~> 5.0.2"

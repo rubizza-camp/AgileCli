@@ -1,3 +1,4 @@
+# :reek:InstanceVariableAssumption
 module Agile
   class CLI < Thor
     include Thor::Actions
