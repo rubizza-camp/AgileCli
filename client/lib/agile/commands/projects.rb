@@ -1,6 +1,5 @@
-require "json"
 # :reek:Lint/Syntax
-require "pry"
+
 module Agile
   class Projects < Thor
     desc "create <project>", "Create new project"
@@ -10,10 +9,7 @@ module Agile
 
     desc "list", "Show projects"
     def list
-      say "wow"
-      data = JSON.parse(`curl -s -G https://agile-cli.herokuapp.com/api/v1/projects/`)
-        binding.pry
-       say data
+      # some code
     end
 
     desc "use <project>", "Select current project"
