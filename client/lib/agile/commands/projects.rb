@@ -1,14 +1,6 @@
 # :reek:Lint/Syntax
 
 module Agile
-  class CLI < Thor
-    desc Rainbow("projects SUBCOMMAND ...ARGS").cornflower, Rainbow("Command for work with projects").darkgoldenrod
-    subcommand "list", List
-    subcommand "create", Create
-    subcommand "use", Use
-    subcommand "invite", Invite
-  end
-
   class Use < Thor
     desc "use <project>", "Select current project"
     def use(project)
@@ -26,7 +18,12 @@ module Agile
   class Create < Thor
     desc "create <project>", "Create new project"
     def create(project)
-      # some code
+      # api
+      if success
+        say "Successelly create project #{project}"
+      else
+        say "Try again"
+      end
     end
   end
 
@@ -35,5 +32,13 @@ module Agile
     def invite(github)
       # some code
     end
+  end
+
+  class CLI < Thor
+    desc Rainbow("projects SUBCOMMAND ...ARGS").cornflower, Rainbow("Command for work with projects").darkgoldenrod
+    subcommand "list", List
+    subcommand "create", Create
+    subcommand "use", Use
+    subcommand "invite", Invite
   end
 end
