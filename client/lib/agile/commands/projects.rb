@@ -1,39 +1,34 @@
+require "json"
 # :reek:Lint/Syntax
-
+require "pry"
 module Agile
-  class CLI < Thor
-    desc Rainbow("projects SUBCOMMAND ...ARGS").cornflower, Rainbow("Command for work with projects").darkgoldenrod
-    subcommand "list", List
-    subcommand "create", Create
-    subcommand "use", Use
-    subcommand "invite", Invite
-  end
+  class Projects < Thor
+    # desc "create <project>", "Create new project"
+    # def create(project)
+    #   # some code
+    # end
 
-  class Use < Thor
-    desc "use <project>", "Select current project"
-    def use(project)
-      # some code
-    end
-  end
-
-  class List < Thor
     desc "list", "Show projects"
     def list
-      # some code
+      say "wow"
+      data = JSON.parse(`curl -s -G https://agile-cli.herokuapp.com/api/v1/projects/`)
+        binding.pry
+       say data
     end
+    # def list
+    #   file = File.read("#{`gem which agile`.chomp.chomp('agile.rb')}/agile/assets/project.json")
+    #   data_hash = JSON.parse(file)
+    #   say data_hash["projects"].values
+    # end
+
+    # desc "use <project>", "Select current project"
+    # def use(project)
+    #   # some code
+    # end
   end
 
-  class Create < Thor
-    desc "create <project>", "Create new project"
-    def create(project)
-      # some code
-    end
-  end
-
-  class Invite < Thor
-    desc "invite <github>", "Add user to your project"
-    def invite(github)
-      # some code
-    end
+  class CLI < Thor
+    desc Rainbow("projects SUBCOMMAND ...ARGS").cornflower, Rainbow("Command for work with projects").darkgoldenrod
+    subcommand "projects", Projects
   end
 end
