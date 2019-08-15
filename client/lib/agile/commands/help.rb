@@ -21,6 +21,7 @@ module Agile
         shell.say
         class_options_help(shell)
         shell.say Rainbow('All commands can be run with -h (or --help) for more information.').whitesmoke
+        shell.say Rainbow('Homepage https://github.com/rubizza-camp/AgileCli').whitesmoke
       end
     end
   end
