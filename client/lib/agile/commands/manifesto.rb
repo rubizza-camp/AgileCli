@@ -4,8 +4,7 @@ module Agile
     def manifesto
       manifest = []
       manifest << File.read("#{`gem which agile`.chomp.chomp('agile.rb')}/agile/assets/manifesto.txt")
-      table = Terminal::Table.new title: "Manifesto", rows: [manifest], style: TERMINAL_STYLE
-      say table
+      say Terminal::Table.new title: "Manifesto", rows: [manifest], style: TERMINAL_STYLE
     end
   end
 end
