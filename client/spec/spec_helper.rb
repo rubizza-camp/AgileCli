@@ -1,5 +1,6 @@
 require "bundler/setup"
 require "agile"
+require "terminal-table"
 require "simplecov"
 require "pry"
 
