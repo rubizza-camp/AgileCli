@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    agile-cli (0.0.7)
+    agile-cli (0.0.10)
       rainbow (~> 3.0.0)
       rest-client (~> 2.0.2)
       terminal-table (~> 1.8.0)
