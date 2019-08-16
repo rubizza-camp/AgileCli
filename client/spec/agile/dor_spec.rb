@@ -5,9 +5,9 @@ RSpec.describe Agile::CLI do
       All work should have a related Ticket.
       Developer should not start development unless a Ticket is "Ready for development"
       We consider a Ticket "Ready for development" if it meets following requirements:
-      
+
       Ticket Requirements must have:
-      
+
       1. Ticket should have a short title
       2. Ticket should have a clear description
       3. Description should including "How to demo" section
