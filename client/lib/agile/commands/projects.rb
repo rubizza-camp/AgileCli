@@ -33,6 +33,17 @@ module Agile
       project_search(data, project)
     end
 
+    desc "delete <project>", "Delete project"
+    def delete(project)
+      @config = JSON.parse(File.read("#{GEM_PATH}.config.json"))
+      responce = RestClient.delete "http://localhost:3000/api/v1/projects/#{project}#destroy      "
+      if responce.body
+        say "Successelly delete project #{project}"
+      else
+        say "Try again"
+      end
+    end
+
     private
 
     def project_search(data, project)
