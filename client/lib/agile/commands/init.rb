@@ -6,22 +6,13 @@ module Agile
 
     def init(remote)
       create_config_file
-      @config = read_config_content
-      @config["current_remote"] = remote
-      File.write("#{GEM_PATH}.config.json", JSON.generate(@config))
+      CONFIG["current_remote"] = remote
+      File.write("#{GEM_PATH}.config.json", JSON.generate(CONFIG))
       say "Successfully added new remote!"
     end
 
     private
-
-    def read_config_content
-      if File.read("#{GEM_PATH}.config.json").empty?
-        {}
-      else
-        JSON.parse(File.read("#{GEM_PATH}.config.json"))
-      end
-    end
-
+    
     def create_config_file
       `touch #{GEM_PATH}.config.json` if `find "#{GEM_PATH}" -name .config.json`.empty?
     end

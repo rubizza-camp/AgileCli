@@ -2,10 +2,8 @@
 module Agile
   class CLI < Thor
     desc Rainbow("login LOGIN_FROM_GITHUB").cornflower, Rainbow("Sign in github.").darkgoldenrod
-
     def login(username)
-      @config = JSON.parse(File.read("#{GEM_PATH}.config.json"))
-      if @config
+      if CONFIG
         write_to_config(username)
         authorize
       else
@@ -20,14 +18,13 @@ module Agile
     end
 
     def authorize
-      RestClient.get "#{@config['current_remote']}/api/v1/users/#{@curr_user}"
-      say "Hello, #{@curr_user}"
-      # say responce.body
+      RestClient.get "#{CONFIG['current_remote']}/api/v1/users/#{@curr_user}"
+      say "Hello, #{@curr_user}" if @curr_user
     end
 
     def write_to_config(username)
-      @config["current_user"] = github_user_login(username)
-      File.write("#{GEM_PATH}.config.json", JSON.generate(@config))
+      CONFIG["current_user"] = github_user_login(username)
+      File.write("#{GEM_PATH}.config.json", JSON.generate(CONFIG))
     end
   end
 end
