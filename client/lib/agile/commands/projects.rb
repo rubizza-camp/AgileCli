@@ -36,7 +36,7 @@ module Agile
     desc "delete <project>", "Delete project"
     def delete(project)
       @config = JSON.parse(File.read("#{GEM_PATH}.config.json"))
-      responce = RestClient.delete "http://localhost:3000/api/v1/projects/#{project}#destroy      "
+      responce = RestClient.delete "#{@config['current_remote']}/api/v1/projects/#{project}"
       if responce.body
         say "Successelly delete project #{project}"
       else
