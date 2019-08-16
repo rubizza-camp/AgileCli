@@ -32,10 +32,10 @@ module Agile
     private
 
     def project_search(data, project)
-      if JSON.parse(data)["projects"].find { |proj| proj["name"] == @project }
-        @config["current_project"] = @project
+      if JSON.parse(data)["projects"].find { |proj| proj["name"] == project }
+        @config["current_project"] = project
         File.write("#{GEM_PATH}.config.json", JSON.generate(@config))
-        say "Your project: #{@project}"
+        say "Your project: #{project}"
       else
         say "Such a project does not exist. Try again"
       end
