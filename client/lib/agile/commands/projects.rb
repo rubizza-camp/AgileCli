@@ -4,7 +4,12 @@ module Agile
   class Projects < Thor
     desc "create <project>", "Create new project"
     def create(project)
-      # some code
+      responce = RestClient.get "#{@config["current_remote"]}#{project}"
+      if responce.body
+        say "Successelly create project #{project}"
+      else
+        say "Try again"
+      end
     end
 
     desc "list", "Show projects"
