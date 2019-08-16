@@ -44,11 +44,6 @@ module Agile
         say "Such a project does not exist. Try again"
       end
     end
-    #
-    # desc "use <project>", "Select current project"
-    # def use(project)
-    #   # some code
-    # end
   end
 
   class CLI < Thor
