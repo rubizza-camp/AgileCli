@@ -1,14 +1,14 @@
 RSpec.describe Agile::CLI do
   describe "#values" do
     subject(:cli) { described_class.new }
-    values =<<-VALUES
-Individuals and interactions over processes and tools
+    values = <<~VALUES
+      Individuals and interactions over processes and tools
 
-Working software over comprehensive documentation
+      Working software over comprehensive documentation
 
-Customer collaboration over contract negotiation
+      Customer collaboration over contract negotiation
 
-Responding to change over following a plan
+      Responding to change over following a plan
     VALUES
 
     before do
