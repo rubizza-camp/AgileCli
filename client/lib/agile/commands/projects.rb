@@ -1,5 +1,4 @@
 # :reek:Lint/Syntax
-
 module Agile
   class Projects < Thor
     desc "create <project>", "Create new project"
@@ -13,10 +12,15 @@ module Agile
       end
     end
 
-    # desc "list", "Show projects"
-    # def list
-    #   # some code
-    # end
+    desc "list", "Show projects"
+    def list
+      @config = JSON.parse(File.read("#{GEM_PATH}.config.json"))
+      responce = RestClient.get "#{@config['current_remote']}/api/v1/projects/"
+      data = JSON.parse(responce)
+      projects_name = data["projects"].map { |name| name["name"] }
+      say Rainbow("<<Your Projects>>").cornflower
+      projects_name.map { |name| p name }
+    end
 
     desc "use <project>", "Select current project"
     def use(project)
