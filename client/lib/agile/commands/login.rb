@@ -1,32 +1,33 @@
-require "json"
-
+# :reek:InstanceVariableAssumption
 module Agile
   class CLI < Thor
-    include Thor::Actions
     desc Rainbow("login LOGIN_FROM_GITHUB").cornflower, Rainbow("Sign in github.").darkgoldenrod
+
     def login(username)
-      create_config_file
-      config = read_config_content
-      config["current_user"] = github_user_login(username)
-      File.write("#{GEM_PATH}.config.json", JSON.generate(config))
+      @config = JSON.parse(File.read("#{GEM_PATH}.config.json"))
+      if @config
+        write_to_config(username)
+        authorize
+      else
+        say "You need to add a remote!"
+      end
     end
 
     private
 
     def github_user_login(username)
-      JSON.parse(`curl -s -u "#{username}" "#{GITHUB_URL}"`)["login"]
+      @curr_user = JSON.parse(`curl -s -u "#{username}" "#{GITHUB_URL}"`)["login"]
     end
 
-    def create_config_file
-      `touch #{GEM_PATH}.config.json` if `find "#{GEM_PATH}" -name .config.json`.empty?
+    def authorize
+      RestClient.get "#{@config['current_remote']}/api/v1/users/#{@curr_user}"
+      say "Hello, #{@curr_user}"
+      # say responce.body
     end
 
-    def read_config_content
-      if File.read("#{GEM_PATH}.config.json").empty?
-        {}
-      else
-        JSON.parse(File.read("#{GEM_PATH}.config.json"))
-      end
+    def write_to_config(username)
+      @config["current_user"] = github_user_login(username)
+      File.write("#{GEM_PATH}.config.json", JSON.generate(@config))
     end
   end
 end
