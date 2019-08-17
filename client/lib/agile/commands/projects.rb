@@ -2,7 +2,7 @@
 module Agile
   class Projects < Thor
     desc "create <project>", "Create new project"
-    def create(project_name)
+    def create(project_name)  
       response = RestClient.post "#{CONFIG['current_remote']}/api/v1/projects/", { name: project_name }
       if response.body
         say "Successelly create project #{project_name}"
@@ -15,26 +15,25 @@ module Agile
     def list
       response = RestClient.get "#{CONFIG['current_remote']}/api/v1/projects/"
       data = JSON.parse(response)
-      projects_name = data["projects"].map { |project| project["name"] }
+      array = data.map { |hash| hash.values }
+      info = array.map { |hash| hash[1]}
       say Rainbow("<<Your Projects>>").cornflower
-      projects_name.map { |name| p name }
+      info.map { |name| p name }
     end
 
     desc "use <project>", "Select current project"
     def use(project)
-      CONFIG
       if CONFIG
-        data = RestClient.get "#{CONFIG['current_remote']}/api/v1/projects/"
+        response = RestClient.get "#{CONFIG['current_remote']}/api/v1/projects/"
       else
         say "You need to add a remote!"
       end
-      project_search(data, project)
+      project_search(response, project)
     end
 
     desc "delete <project>", "Delete project"
     def delete(project)
-      CONFIG
-      response = RestClient.delete "#{CONFIG['current_remote']}/api/v1/projects/#{project}"
+      response = RestClient.delete "#{CONFIG['current_remote']}/api/v1/projects/#{project}", { name: project}
       if response.body
         say "Successelly delete project #{project}"
       else
@@ -44,7 +43,7 @@ module Agile
 
     desc "update <project_name> <new_project_name>", "Update project name"
     def update(project, new_project)
-      RestClient.put "#{CONFIG['current_remote']}/api/v1/projects/#{project}", name: project, new_name: new_project
+      response = RestClient.put "#{CONFIG['current_remote']}/api/v1/projects/#{project}", name: project, new_name: new_project
       if response.body
         say "Successelly update project #{project}"
       else
@@ -54,8 +53,11 @@ module Agile
   
     private
 
-    def project_search(data, project)
-      if JSON.parse(data)["projects"].find { |proj| proj["name"] == project }
+    def project_search(response, project)
+      array = JSON.parse(response)
+      info = array.map { |hash| hash.values }
+      names = info.map{ |hash| hash[1] }
+      if names.include?(project)
         CONFIG["current_project"] = project
         File.write("#{GEM_PATH}.config.json", JSON.generate(CONFIG))
         say "Your project: #{project}"
