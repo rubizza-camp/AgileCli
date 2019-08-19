@@ -7,6 +7,7 @@ module Agile
     def init(remote)
       create_config_file
       CONFIG["current_remote"] = remote
+      CONFIG["remotes"] = [remote]
       File.write("#{GEM_PATH}.config.json", JSON.generate(CONFIG))
       say "Successfully added new remote!"
     end
