@@ -20,7 +20,13 @@ module Agile
 
     desc "list", "Remotes list"
     def list
-      CONFIG["remotes"].each { |name| p name }
+      CONFIG["remotes"].each do |name|
+        if name == CONFIG["current_remote"]
+          p "* #{name}"
+        else
+          p name
+        end
+      end
     end
   end
 
