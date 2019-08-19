@@ -15,7 +15,7 @@ module Agile
     def list
       response = RestClient.get "#{CONFIG['current_remote']}/api/v1/projects/"
       say Rainbow("<<Your Projects>>").cornflower
-      (JSON.parse(response)).map { |hash| p hash.values[1] }
+      JSON.parse(response).map { |hash| p hash.values[1] }
     end
 
     desc "use <project>", "Select current project"
@@ -51,7 +51,7 @@ module Agile
     private
 
     def project_search(response, project)
-      info = (JSON.parse(response)).map { |hash| hash.values[1] }
+      info = JSON.parse(response).map { |hash| hash.values[1] }
       if info.include?(project)
         CONFIG["current_project"] = project
         File.write("#{GEM_PATH}.config.json", JSON.generate(CONFIG))
