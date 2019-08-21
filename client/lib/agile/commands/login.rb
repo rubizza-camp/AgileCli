@@ -1,10 +1,10 @@
 # :reek:InstanceVariableAssumption
 module Agile
   class CLI < Thor
-    desc Rainbow("login LOGIN_FROM_GITHUB").cornflower, Rainbow("Sign in github.").darkgoldenrod
-    def login(username)
+    desc Rainbow("login").cornflower, Rainbow("Sign in github.").darkgoldenrod
+    def login
       if CONFIG
-        write_to_config(username)
+        write_to_config
         authorize
       else
         say "You need to add a remote!"
@@ -13,8 +13,9 @@ module Agile
 
     private
 
-    def github_user_login(username)
-      @curr_user = JSON.parse(`curl -s -u "#{username}" "#{GITHUB_URL}"`)["login"]
+    def github_user_login
+      `open "#{GITHUB_URL}/oauth/authorize?client_id=#{CLIENT_ID}"`
+
     end
 
     def authorize
@@ -22,8 +23,8 @@ module Agile
       say "Hello, #{@curr_user}" if @curr_user
     end
 
-    def write_to_config(username)
-      CONFIG["current_user"] = github_user_login(username)
+    def write_to_config
+      CONFIG["current_user"] = github_user_login
       File.write("#{GEM_PATH}.config.json", JSON.generate(CONFIG))
     end
   end
