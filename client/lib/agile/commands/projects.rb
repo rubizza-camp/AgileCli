@@ -30,7 +30,7 @@ module Agile
     desc "delete <project>", "Delete project"
     def delete(project)
       error_checking
-      response = RestClient.delete "#{CONFIG['current_remote']}/api/v1/projects/#{project}", { name: project }
+      response = RestClient.delete "#{CONFIG['current_remote']}/api/v1/projects/#{project}", name: project
       if response.body
         say "Successfully deleted project #{project}"
       else

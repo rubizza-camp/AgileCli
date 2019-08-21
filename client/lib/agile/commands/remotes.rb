@@ -15,9 +15,13 @@ module Agile
     desc "add <remotes url>", "Add remote url"
     def add(remote)
       error_checking
-      CONFIG["remotes"].push(remote)
-      File.write("#{GEM_PATH}.config.json", JSON.generate(CONFIG))
-      say "Successfully added new remote!"
+      if remote =~ URL_PATTERN || remote =~ LOCALHOST_PATTERN
+        CONFIG["remotes"].push(remote)
+        File.write("#{GEM_PATH}.config.json", JSON.generate(CONFIG))
+        say "Successfully added new remote!"
+      else 
+        say "It's not a url!"
+      end
     end
 
     desc "list", "Remotes list"
