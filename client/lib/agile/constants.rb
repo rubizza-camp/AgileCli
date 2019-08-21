@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 # rubocop:disable Style/RegexpLiteral
+
 module Agile
   VERSION = "0.0.11"
   GITHUB_URL = %(https://api.github.com/user)
