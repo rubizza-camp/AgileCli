@@ -5,17 +5,25 @@ module Agile
     desc Rainbow("init REMOTE_URL").cornflower, Rainbow("Add default remote").darkgoldenrod
 
     def init(remote)
-      create_config_file
-      CONFIG["current_remote"] = remote
-      CONFIG["remotes"] = [remote]
-      File.write("#{GEM_PATH}.config.json", JSON.generate(CONFIG))
-      say "Successfully added new remote!"
+      error_checking
+      if remote =~ URL_PATTERN || remote =~ LOCALHOST_PATTERN
+        write_remote_to_config(remote)
+        say "Successfully added new remote!"
+      else
+        say "It's not a url!"
+      end
     end
 
     private
-    
-    def create_config_file
-      `touch #{GEM_PATH}.config.json` if `find "#{GEM_PATH}" -name .config.json`.empty?
+
+    def error_checking
+      abort "You've already did init! Try to add more remotes" if CONFIG["current_remote"]
+    end
+
+    def write_remote_to_config(remote)
+      CONFIG["current_remote"] = remote
+      CONFIG["remotes"] = [remote]
+      File.write("#{GEM_PATH}.config.json", JSON.generate(CONFIG))
     end
   end
 end
