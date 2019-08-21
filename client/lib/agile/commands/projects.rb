@@ -2,10 +2,11 @@
 module Agile
   class Projects < Thor
     desc "create <project>", "Create new project"
-    def create(project_name)  
+    def create(project_name)
+      error_checking
       response = RestClient.post "#{CONFIG['current_remote']}/api/v1/projects/", { name: project_name }
       if response.body
-        say "Successelly create project #{project_name}"
+        say "Successfully created project #{project_name}"
       else
         say "Try again"
       end
@@ -13,6 +14,7 @@ module Agile
 
     desc "list", "Show projects"
     def list
+      error_checking
       response = RestClient.get "#{CONFIG['current_remote']}/api/v1/projects/"
       say Rainbow("<<Your Projects>>").cornflower
       JSON.parse(response).map { |hash| p hash.values[1] }
@@ -20,19 +22,17 @@ module Agile
 
     desc "use <project>", "Select current project"
     def use(project)
-      if CONFIG
-        response = RestClient.get "#{CONFIG['current_remote']}/api/v1/projects/"
-      else
-        say "You need to add a remote!"
-      end
+      error_checking
+      response = RestClient.get "#{CONFIG['current_remote']}/api/v1/projects/"
       project_search(response, project)
     end
 
     desc "delete <project>", "Delete project"
     def delete(project)
-      response = RestClient.delete "#{CONFIG['current_remote']}/api/v1/projects/#{project}", { name: project}
+      error_checking
+      response = RestClient.delete "#{CONFIG['current_remote']}/api/v1/projects/#{project}", { name: project }
       if response.body
-        say "Successelly delete project #{project}"
+        say "Successfully deleted project #{project}"
       else
         say "Try again"
       end
@@ -40,15 +40,21 @@ module Agile
 
     desc "update <project_name> <new_project_name>", "Update project name"
     def update(project, new_project)
+      error_checking
       response = RestClient.put "#{CONFIG['current_remote']}/api/v1/projects/#{project}", name: project, new_name: new_project
       if response.body
-        say "Successelly update project #{project}"
+        say "Successfully updated project #{project}"
       else
         say "Try again"
       end
     end
-  
+
     private
+
+    def error_checking
+      abort "You haven't done init yet!" unless CONFIG["current_remote"]
+      abort "Please, log in!" unless CONFIG["current_user"]
+    end
 
     def project_search(response, project)
       info = JSON.parse(response).map { |hash| hash.values[1] }
@@ -57,7 +63,7 @@ module Agile
         File.write("#{GEM_PATH}.config.json", JSON.generate(CONFIG))
         say "Your project: #{project}"
       else
-        say "Such a project does not exist. Try again"
+        say "Such project does not exist. Try again"
       end
     end
   end
