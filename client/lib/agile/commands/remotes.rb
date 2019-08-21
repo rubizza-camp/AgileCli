@@ -19,7 +19,7 @@ module Agile
         CONFIG["remotes"].push(remote)
         File.write("#{GEM_PATH}.config.json", JSON.generate(CONFIG))
         say "Successfully added new remote!"
-      else 
+      else
         say "It's not a url!"
       end
     end
