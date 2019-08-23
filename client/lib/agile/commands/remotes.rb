@@ -6,7 +6,7 @@ module Agile
       if CONFIG["remotes"].include?(remote)
         CONFIG["current_remote"] = remote
         File.write("#{GEM_PATH}.config.json", JSON.generate(CONFIG))
-        say "Successfully change remote!"
+        say "Successfully changed current remote!"
       else
         say "Try again"
       end
