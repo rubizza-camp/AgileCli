@@ -4,7 +4,7 @@ module Agile
     desc Rainbow("login").cornflower, Rainbow("Sign in github.").darkgoldenrod
     def login
       if CONFIG
-        `open "#{GITHUB_URL}/oauth/authorize?client_id=#{CLIENT_ID}"`
+        `xdg-open "#{GITHUB_URL}/oauth/authorize?client_id=#{CLIENT_ID}"`
         secret_node = call_cli
         response = RestClient.get "#{CONFIG['current_remote']}/api/v1/users/#{secret_node}"
         login = JSON.parse(response).map { |hash| hash[1]["attributes"]["github_login"] }
