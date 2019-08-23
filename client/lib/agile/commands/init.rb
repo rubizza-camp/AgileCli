@@ -6,12 +6,8 @@ module Agile
 
     def init(remote)
       error_checking
-      if remote =~ URL_PATTERN || remote =~ LOCALHOST_PATTERN
-        write_remote_to_config(remote)
-        say "Successfully added new remote!"
-      else
-        say "It's not a url!"
-      end
+      write_remote_to_config(remote)
+      say "Successfully added new remote!"
     end
 
     private
