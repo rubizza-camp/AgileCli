@@ -5,8 +5,8 @@ module Agile
     def create(project_name)
       error_checking
       response = RestClient.post "#{CONFIG['current_remote']}/api/v1/projects/",
-                 name: project_name,
-                 current_user: CONFIG["current_user"]
+                                 name: project_name,
+                                 current_user: CONFIG["current_user"]
       if response.body
         say "Successfully created project #{project_name}"
       else
