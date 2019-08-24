@@ -24,7 +24,6 @@ module Agile
     end
 
     def parse_login
-      require "pry"; binding.pry
       login = JSON.parse(@response)["data"]["attributes"]["github_login"]
       write_to_config(login)
       say "Hello, #{login}!"
