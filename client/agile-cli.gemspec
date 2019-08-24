@@ -13,7 +13,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
   spec.executables   = ["agile"]
 
-  spec.add_dependency "bcrypt", "~> 3.1.12"
   spec.add_dependency "highline", "~> 2.0.2"
   spec.add_dependency "rainbow", "~> 3.0.0"
   spec.add_dependency "rest-client", "~> 2.0.2"

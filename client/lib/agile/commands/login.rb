@@ -1,21 +1,17 @@
 # :reek:InstanceVariableAssumption:TooManyStatements
-require "bcrypt"
 
 module Agile
   class CLI < Thor
     desc Rainbow("login").cornflower, Rainbow("Sign in github.").darkgoldenrod
     def login
-      if CONFIG
-        `xdg-open "#{GITHUB_URL}/oauth/authorize?client_id=#{CLIENT_ID}"`
-        @secret_node = call_cli
-        @response = RestClient.get "#{CONFIG['current_remote']}/api/v1/users/#{@secret_node}"
-        if JSON.parse(@response.body)["data"]
-          parse_login
-        else
-          say "Something went wrong"
-        end
+      error_checking
+      `xdg-open "#{GITHUB_URL}/oauth/authorize?client_id=#{CLIENT_ID}"`
+      @secret_node = call_cli
+      @response = RestClient.get "#{CONFIG['current_remote']}/api/v1/users/#{@secret_node.to_s}"
+      if JSON.parse(@response)["data"]["attributes"]
+        parse_login
       else
-        say "You need to init!"
+        say "Something went wrong"
       end
     end
 
@@ -28,14 +24,18 @@ module Agile
     end
 
     def parse_login
-      login = JSON.parse(@response).map { |hash| hash[1]["attributes"]["github_login"] }
+      login = JSON.parse(@response)["data"]["attributes"]["github_login"]
       write_to_config(login)
-      say "Hello, #{login[0]}!"
+      say "Hello, #{login}!"
     end
 
     def call_cli
       cli = HighLine.new
-      cli.ask("Enter your secret code:  ")
+      cli.ask("Enter your secret code:  ", String)
+    end
+
+    def error_checking
+      abort "You haven't done init yet!" unless CONFIG["current_remote"]
     end
   end
 end
