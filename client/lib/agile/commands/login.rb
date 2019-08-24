@@ -7,7 +7,7 @@ module Agile
       error_checking
       `xdg-open "#{GITHUB_URL}/oauth/authorize?client_id=#{CLIENT_ID}"`
       @secret_node = call_cli
-      @response = RestClient.get "#{CONFIG['current_remote']}/api/v1/users/#{@secret_node.to_s}"
+      @response = RestClient.get "#{CONFIG['current_remote']}/api/v1/users/#{@secret_node}"
       if JSON.parse(@response)["data"]["attributes"]
         parse_login
       else
