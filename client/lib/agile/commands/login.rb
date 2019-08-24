@@ -36,11 +36,11 @@ module Agile
 
     def open_link
       link = "#{GITHUB_URL}/oauth/authorize?client_id=#{CLIENT_ID}"
-      if RbConfig::CONFIG['host_os'] =~ /mswin|mingw|cygwin/
+      if RbConfig::CONFIG["host_os"].match?(/mswin|mingw|cygwin/)
         system "start #{link}"
-      elsif RbConfig::CONFIG['host_os'] =~ /darwin/
+      elsif RbConfig::CONFIG["host_os"].match?(/darwin/)
         system "open #{link}"
-      elsif RbConfig::CONFIG['host_os'] =~ /linux|bsd/
+      elsif RbConfig::CONFIG["host_os"].match?(/linux|bsd/)
         system "xdg-open #{link}"
       end
     end
