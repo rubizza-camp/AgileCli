@@ -18,12 +18,13 @@ module Agile
     private
 
     def write_to_config(login)
-      CONFIG["current_user"] = login[0]
+      CONFIG["current_user"] = login
       CONFIG["user_node"] = @secret_node
       File.write("#{GEM_PATH}.config.json", JSON.generate(CONFIG))
     end
 
     def parse_login
+      require "pry"; binding.pry
       login = JSON.parse(@response)["data"]["attributes"]["github_login"]
       write_to_config(login)
       say "Hello, #{login}!"
