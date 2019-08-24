@@ -5,14 +5,14 @@ module Agile
     desc Rainbow("init REMOTE_URL").cornflower, Rainbow("Add default remote").darkgoldenrod
 
     def init(remote)
-      error_checking
+      error_checking_init
       write_remote_to_config(remote)
       say "Successfully added new remote!"
     end
 
     private
 
-    def error_checking
+    def error_checking_init
       abort "You've already did init! Try to add more remotes" if CONFIG["current_remote"]
     end
 
