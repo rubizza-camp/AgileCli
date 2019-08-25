@@ -3,7 +3,7 @@ module Agile
   class Projects < Thor
     desc "create <project>", "Create new project"
     def create(project_name)
-      error_checking
+      error_checking_projects
       response = RestClient.post "#{CONFIG['current_remote']}/api/v1/projects/",
                                  name: project_name,
                                  current_user: CONFIG["current_user"]
@@ -16,7 +16,7 @@ module Agile
 
     desc "list", "Show projects"
     def list
-      error_checking
+      error_checking_projects
       response = RestClient.get "#{CONFIG['current_remote']}/api/v1/projects/"
       say Rainbow("<<Your Projects>>").cornflower
       JSON.parse(response).map { |hash| p hash.values[1] }
@@ -24,14 +24,14 @@ module Agile
 
     desc "use <project>", "Select current project"
     def use(project)
-      error_checking
+      error_checking_projects
       response = RestClient.get "#{CONFIG['current_remote']}/api/v1/projects/"
       project_search(response, project)
     end
 
     desc "delete <project>", "Delete project"
     def delete(project)
-      error_checking
+      error_checking_projects
       response = RestClient.delete "#{CONFIG['current_remote']}/api/v1/projects/#{project}", name: project
       if response.body
         say "Successfully deleted project #{project}"
@@ -42,7 +42,7 @@ module Agile
 
     desc "update <project_name> <new_project_name>", "Update project name"
     def update(project, new_project)
-      error_checking
+      error_checking_projects
       response = RestClient.put "#{CONFIG['current_remote']}/api/v1/projects/#{project}", name: project, new_name: new_project
       if response.body
         say "Successfully updated project #{project}"
@@ -53,7 +53,7 @@ module Agile
 
     private
 
-    def error_checking
+    def error_checking_projects
       abort "You haven't done init yet!" unless CONFIG["current_remote"]
       abort "Please, log in!" unless CONFIG["current_user"]
     end
