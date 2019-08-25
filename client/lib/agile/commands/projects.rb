@@ -17,9 +17,11 @@ module Agile
     desc "list", "Show projects"
     def list
       error_checking_projects
-      response = RestClient.get "#{CONFIG['current_remote']}/api/v1/projects/"
+      response = RestClient.get "#{CONFIG['current_remote']}/api/v1/userproject/#{CONFIG['current_user']}"
       say Rainbow("<<Your Projects>>").cornflower
-      JSON.parse(response).map { |hash| p hash.values[1] }
+      JSON.parse(response).each do |proj|
+        say proj.first.values[1]
+      end
     end
 
     desc "use <project>", "Select current project"
