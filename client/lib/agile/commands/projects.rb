@@ -27,14 +27,14 @@ module Agile
     desc "use <project>", "Select current project"
     def use(project)
       error_checking_projects
-      response = RestClient.get "#{CONFIG['current_remote']}/api/v1/projects/"
+      response = RestClient.get "#{CONFIG['current_remote']}/api/v1/userproject/#{CONFIG['current_user']}"
       project_search(response, project)
     end
 
     desc "delete <project>", "Delete project"
     def delete(project)
       error_checking_projects
-      response = RestClient.delete "#{CONFIG['current_remote']}/api/v1/projects/#{project}", name: project
+      response = RestClient.delete "#{CONFIG['current_remote']}/api/v1/userproject/#{CONFIG['current_user']}", name: project
       if response.body
         say "Successfully deleted project #{project}"
       else
@@ -45,7 +45,7 @@ module Agile
     desc "update <project_name> <new_project_name>", "Update project name"
     def update(project, new_project)
       error_checking_projects
-      response = RestClient.put "#{CONFIG['current_remote']}/api/v1/projects/#{project}", name: project, new_name: new_project
+      response = RestClient.put "#{CONFIG['current_remote']}/api/v1/userproject/#{CONFIG['current_user']}", name: project, new_name: new_project
       if response.body
         say "Successfully updated project #{project}"
       else
@@ -61,8 +61,7 @@ module Agile
     end
 
     def project_search(response, project)
-      info = JSON.parse(response).map { |hash| hash.values[1] }
-      if info.include?(project)
+      if JSON.parse(response).map { |array| array.map { |hash| hash.values_at("name").include?(project) } } == [[true]]
         CONFIG["current_project"] = project
         File.write("#{GEM_PATH}.config.json", JSON.generate(CONFIG))
         say "Your project: #{project}"
