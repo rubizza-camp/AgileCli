@@ -25,7 +25,6 @@ RSpec.describe Agile::CLI do
 
     # it 'create config file' do
     #   cli.init('remote')
-    #   # require 'pry'; binding.pry
     #   expect(File.exists?("#{Agile::GEM_PATH}/config.json")).to eq(true)
     # end
 
