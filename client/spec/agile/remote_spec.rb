@@ -4,28 +4,16 @@ RSpec.describe Agile::CLI do
 
     before do
       Agile::CONFIG["remotes"].clear
-      allow(remote).to receive(:error_checking)
+      Agile::CONFIG["current_user"] = "smone"
+      allow(remote).to receive(:error_checking_remotes)
       allow(remote).to receive(:say)
-      allow(remote).to receive(:say).with("* remote")
-    end
-
-    describe "#list" do
-      it "check for error" do
-        remote.list
-        expect(remote).to have_received(:error_checking)
-      end
-
-      it "shows all remotes" do
-        remote.list
-        expect(remote).to have_received(:say).exactly(Agile::CONFIG["remotes"].count).times
-      end
-
     end
 
     describe "#use" do
       it "check for error" do
+        # require 'pry'; binding.pry
         remote.use("remote")
-        expect(remote).to have_received(:error_checking)
+        expect(remote).to have_received(:error_checking_remotes)
       end
 
       it "aborts when remote wasn't added" do
@@ -48,14 +36,14 @@ RSpec.describe Agile::CLI do
       it "successfully finishes" do
         Agile::CONFIG["remotes"] << "remote"
         remote.use("remote")
-        expect(remote).to have_received(:say).with("Successfully change remote!")
+        expect(remote).to have_received(:say).with("Successfully changed current remote!")
       end
     end
 
     describe "#add" do
       it "check for error" do
         remote.add("remote")
-        expect(remote).to have_received(:error_checking)
+        expect(remote).to have_received(:error_checking_remotes)
       end
 
       it "add new remote" do
@@ -71,6 +59,18 @@ RSpec.describe Agile::CLI do
       it "successfully finishes" do
         remote.add("new_remote")
         expect(remote).to have_received(:say).with("Successfully added new remote!")
+      end
+    end
+
+    describe "#list" do
+      it "check for error" do
+        remote.list
+        expect(remote).to have_received(:error_checking_remotes)
+      end
+
+      it "shows all remotes" do
+        remote.list
+        expect(remote).to have_received(:say).exactly(Agile::CONFIG["remotes"].count).times
       end
     end
   end
