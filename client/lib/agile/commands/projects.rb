@@ -5,8 +5,7 @@ module Agile
     def create(project_name)
       error_checking_projects
       response = RestClient.post "#{CONFIG['current_remote']}/api/v1/projects/",
-                                 name: project_name,
-                                 current_user: CONFIG["current_user"]
+                                 name: project_name, current_user: CONFIG["current_user"]
       if response.body
         say "Successfully created project #{project_name}"
       else
@@ -31,25 +30,16 @@ module Agile
       project_search(response, project)
     end
 
-    desc "delete <project>", "Delete project"
-    def delete(project)
-      error_checking_projects
-      response = RestClient.delete "#{CONFIG['current_remote']}/api/v1/projects/#{project}", name: project
-      if response.body
-        say "Successfully deleted project #{project}"
-      else
-        say "Try again"
-      end
-    end
-
     desc "update <project_name> <new_project_name>", "Update project name"
     def update(project, new_project)
       error_checking_projects
-      response = RestClient.put "#{CONFIG['current_remote']}/api/v1/projects/#{project}", name: project, new_name: new_project
-      if response.body
-        say "Successfully updated project #{project}"
+      resp = RestClient.get "#{CONFIG['current_remote']}/api/v1/userproject/#{CONFIG['current_user']}"
+      pr_list = JSON.parse(resp).map { |array| array.map { |hash| hash.values_at("name").include?(project) } }
+      if pr_list.include?([true])
+        RestClient.put "#{CONFIG['current_remote']}/api/v1/projects/#{project}", name: project, new_name: new_project
+        say "Updated from #{project} to #{new_project}"
       else
-        say "Try again"
+        say "Error"
       end
     end
 
