@@ -73,6 +73,7 @@ module Agile
     cli = HighLine.new
     cli.ask("write new description : ", String)
   end
+
   class CLI < Thor
     desc Rainbow("tickets SUBCOMMAND ...ARGS").cornflower, Rainbow("Command for work with tickets").darkgoldenrod
     subcommand "tickets", Tickets
