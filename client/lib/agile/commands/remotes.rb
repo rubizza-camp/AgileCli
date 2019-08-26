@@ -25,9 +25,9 @@ module Agile
       error_checking_remotes
       CONFIG["remotes"].each do |name|
         if name == CONFIG["current_remote"]
-          p "* #{name}"
+          say "* #{name}"
         else
-          p name
+          say name
         end
       end
     end
