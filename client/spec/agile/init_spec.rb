@@ -23,10 +23,10 @@ RSpec.describe Agile::CLI do
       expect(Agile::CONFIG["remotes"]).to eq(["remote"])
     end
 
-    # it "create config file" do
-    #   cli.init('remote')
-    #   expect(File.exists?("#{Agile::GEM_PATH}/config.json")).to eq(true)
-    # end
+    it "create config file" do
+      cli.init("remote")
+      expect(File.exist?("#{Agile::GEM_PATH}/.config.json")).to eq(true)
+    end
 
     it "Successfully finish" do
       cli.init("remote")
