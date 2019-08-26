@@ -51,14 +51,21 @@ module Agile
     end
 
     def project_search(response, project)
-      info = JSON.parse(response).map { |hash| hash.values[1] }
-      if info.include?(project)
-        CONFIG["current_project"] = project
-        File.write("#{GEM_PATH}.config.json", JSON.generate(CONFIG))
+      info = JSON.parse(response).map(&:values)
+      id_pr = info.map { |arr| arr[0] if arr[1] == project }
+      id_pr.delete_if(&:nil?)
+      if info[1].include?(project)
+        write_to_config(id_pr, project)
         say "Your project: #{project}"
       else
         say "Such project does not exist. Try again"
       end
+    end
+
+    def write_to_config(id_pr, project)
+      CONFIG["current_project_id"] = id_pr.first
+      CONFIG["current_project"] = project
+      File.write("#{GEM_PATH}.config.json", JSON.generate(CONFIG))
     end
   end
 
