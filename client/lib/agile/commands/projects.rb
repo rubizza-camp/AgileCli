@@ -51,9 +51,12 @@ module Agile
     end
 
     def project_search(response, project)
-      info = JSON.parse(response).map { |hash| hash.values[1] }
-      if info.include?(project)
+      info = JSON.parse(response).map { |hash| hash.values }
+      id_pr = info.map { |arr| arr[0] if arr[1] == project }
+      id_pr.delete_if{ |proj| proj == nil }
+      if info[1].include?(project)
         CONFIG["current_project"] = project
+        CONFIG["current_project_id"] = id_pr.first
         File.write("#{GEM_PATH}.config.json", JSON.generate(CONFIG))
         say "Your project: #{project}"
       else

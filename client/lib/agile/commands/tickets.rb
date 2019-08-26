@@ -8,17 +8,27 @@ module Agile
       puts "you take ticket"
     end
 
-    desc "add <ticket>", "Add new ticket"
-    def add(ticket)
+    desc "create <ticket>", "Add new ticket"
+    def create(ticket)
       ticket_name = ticket
-      ticket_description = cli_for_description
-      # call api with name: ticket_name, description: ticket_description
+      cli = HighLine.new
+      ticket_description = cli.ask("description for ticket: ", String)
+      RestClient.post"#{CONFIG['current_remote']}/api/v1/tickets/",
+                     project_id: CONFIG['current_project_id'], name: ticket_name, user: CONFIG['current_user'], desc: ticket_description
       say "Successfully added new ticket!"
     end
 
     desc "list", "Tickets list"
     def list
-      # call api to see all tickets
+      response = RestClient.get "#{CONFIG['current_remote']}/api/v1/tickets/"
+      JSON.parse(response).each do |proj|
+        say proj["name"]
+      end
+    end
+
+    desc "check <name_ticket>", "Check ticket"
+    def check(ticket)
+
     end
 
     desc "my_list", "Your tickets list"
@@ -34,15 +44,15 @@ module Agile
 
     desc "update <ticket>", "update ticket"
     def update(ticket)
-      choice = cli_for_change
-      if choice == name
-        new_name = call_cli_name
-        # call api to update
+      choice = HighLine.new
+      choice.ask("Choose what you need to edit : name or description (N or D)", String)
+      if choice == "N"
+        # call api for name
+      elsif choice == "D"
+        # call api for description
       else
-        new_description = call_cli_desc
-        # call api to update
+        say "Try again"
       end
-      puts "you update ticket"
     end
 
     desc "delete <ticket>", "Delete ticket"
