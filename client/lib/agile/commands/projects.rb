@@ -23,6 +23,14 @@ module Agile
       end
     end
 
+    desc "show <project>", "Show project"
+    def show(project)
+      response = RestClient.get "#{CONFIG['current_remote']}/api/v1/projects/#{project}"
+      row = JSON.parse(response)
+      say "Project: #{row['data']['attributes']['name']}"
+      say "Description: #{row['data']['attributes']['description']}"
+    end
+
     desc "use <project>", "Select current project"
     def use(project)
       error_checking_projects
@@ -30,20 +38,49 @@ module Agile
       project_search(response, project)
     end
 
-    desc "update <project_name> <new_project_name>", "Update project name"
-    def update(project, new_project)
+    desc "update <project_name> ", "Update project"
+    def update(project)
       error_checking_projects
-      resp = RestClient.get "#{CONFIG['current_remote']}/api/v1/userproject/#{CONFIG['current_user']}"
-      pr_list = JSON.parse(resp).map { |array| array.map { |hash| hash.values_at("name").include?(project) } }
-      if pr_list.include?([true])
-        RestClient.put "#{CONFIG['current_remote']}/api/v1/projects/#{project}", name: project, new_name: new_project
-        say "Updated from #{project} to #{new_project}"
+      choice = HighLine.new
+      answer = choice.ask("Choose what you need to edit : name or description (N or D): ", String)
+      if answer == "N"
+        update_name(project)
+      elsif answer == "D"
+        update_description(project)
       else
-        say "Error"
+        say "Try again"
       end
     end
 
+    # def update(project, new_project)
+    #   error_checking_projects
+    #   resp = RestClient.get "#{CONFIG['current_remote']}/api/v1/userproject/#{CONFIG['current_user']}"
+    #   pr_list = JSON.parse(resp).map { |array| array.map { |hash| hash.values_at("name").include?(project) } }
+    #   if pr_list.include?([true])
+    #     RestClient.put "#{CONFIG['current_remote']}/api/v1/projects/#{project}", name: project, new_name: new_project
+    #     say "Updated from #{project} to #{new_project}"
+    #   else
+    #     say "Error"
+    #   end
+    # end
+
     private
+
+    def update_name(project)
+      choice = HighLine.new
+      new_project = choice.ask("Enter new name of project: ", String)
+      RestClient.put "#{CONFIG['current_remote']}/api/v1/projects/#{project}",
+                     name: project, new_name: new_project, type: 1
+      say "Updated from #{project} to #{new_project}"
+    end
+
+    def update_description(project)
+      choice = HighLine.new
+      new_description = choice.ask("Enter new description for project: ", String)
+      RestClient.put "#{CONFIG['current_remote']}/api/v1/projects/#{project}",
+                     name: project, new_description: new_description
+      say "Updated description to #{new_description}"
+    end
 
     def error_checking_projects
       abort "You haven't done init yet!" unless CONFIG["current_remote"]
