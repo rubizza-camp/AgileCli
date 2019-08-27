@@ -22,25 +22,29 @@ module Agile
     desc "list", "Tickets list"
     def list
       response = RestClient.get "#{CONFIG['current_remote']}/api/v1/tickets/"
-      JSON.parse(response).each do |proj|
-        say proj["name"]
+      JSON.parse(response).each do |ticket|
+        say ticket["name"]
       end
     end
 
-    #   desc "check <name_ticket>", "Check ticket"
-    #   def check(ticket)
-    #   end
-    #
-    #   desc "my_list", "Your tickets list"
-    #   def my_list
-    #     CONFIG["tickets"].each do |name|
-    #       if name == CONFIG["tickets"]
-    #         say "* #{name}"
-    #       else
-    #         say name
-    #       end
+    desc "check <name_ticket>", "Check ticket"
+    def check(ticket)
+      response = RestClient.get "#{CONFIG['current_remote']}/api/v1/tickets/#{ticket}"
+      row = JSON.parse(response)
+      say "Ticket: #{row['data']['attributes']['name']}"
+      say "Description: #{row['data']['attributes']['description']}"
+    end
+
+    # desc "my_list", "Your tickets list"
+    # def my_list
+    #   CONFIG["tickets"].each do |name|
+    #     if name == CONFIG["tickets"]
+    #       say "* #{name}"
+    #     else
+    #       say name
     #     end
     #   end
+    # end
     #
     #   desc "update <ticket>", "update ticket"
     #   def update(ticket)
@@ -59,22 +63,6 @@ module Agile
     #   def delete(ticket)
     #     call api to delete ticket
     #     puts "you delete ticket"
-    #   end
-    #
-    #   private
-    #   def cli_for_description
-    #     cli = HighLine.new
-    #     cli.ask("description for ticket: ", String)
-    #   end
-    #
-    #   def cli_for_change
-    #     cli = HighLine.new
-    #     cli.ask("name or description change? : ", String)
-    #   end
-    #
-    #   def call_cli_name
-    #     cli = HighLine.new
-    #     cli.ask("write new name : ", String)
     #   end
   end
 
