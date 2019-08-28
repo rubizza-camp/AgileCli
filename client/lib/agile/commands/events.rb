@@ -21,6 +21,7 @@ module Agile
     end
 
     desc "show <date (yyyy-mm-dd)>", "Show event"
+    # :reek:ControlParameter
     def show(date)
       response = RestClient.get "#{CONFIG['current_remote']}/api/v1/events/"
       JSON.parse(response).each { |event| puts_info(event) if event["date"] == date }
