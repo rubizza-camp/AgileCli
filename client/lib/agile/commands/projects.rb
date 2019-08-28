@@ -19,7 +19,11 @@ module Agile
       response = RestClient.get "#{CONFIG['current_remote']}/api/v1/userproject/#{CONFIG['current_user']}"
       say Rainbow("<<Your Projects>>").cornflower
       JSON.parse(response).each do |proj|
-        say proj.first.values[1]
+        if proj.first.values[1] == CONFIG["current_project"]
+          say "* #{proj.first.values[1]}"
+        else
+          say proj.first.values[1]
+        end
       end
     end
 

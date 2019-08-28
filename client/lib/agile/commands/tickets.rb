@@ -14,9 +14,8 @@ module Agile
     desc "list", "Tickets list"
     def list
       response = RestClient.get "#{CONFIG['current_remote']}/api/v1/tickets/"
-      JSON.parse(response).each do |ticket|
-        say ticket["name"]
-      end
+      info = JSON.parse(response)
+      info.each {|ticket| puts ticket["name"] if ticket["project_id"] == CONFIG["current_project_id"]}
     end
 
     desc "show <name_ticket>", "Show ticket"
