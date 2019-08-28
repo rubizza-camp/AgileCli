@@ -17,11 +17,8 @@ module Agile
     desc "list", "Show all events"
     def list
       response = RestClient.get "#{CONFIG['current_remote']}/api/v1/events/"
-      require 'pry';binding.pry
       JSON.parse(response).each do |event|
-        d = DateTime.new(event["date"])
-        puts d
-        #puts "#{event["event_type"]} starting #{event["date"]}#{event["start_time"]} end at #{event["end_time"]}"
+        puts "#{event["event_type"]} starting #{event["date"]}#{event["start_time"]} end at #{event["end_time"]}"
       end
     end
 
