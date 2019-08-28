@@ -1,6 +1,3 @@
-require "date"
-require "time"
-
 module Agile
   class Events < Thor
     desc "create", "Add new event"
@@ -18,7 +15,7 @@ module Agile
     def list
       response = RestClient.get "#{CONFIG['current_remote']}/api/v1/events/"
       JSON.parse(response).each do |event|
-        puts "#{event["event_type"]} starting #{event["date"]}#{event["start_time"]} end at #{event["end_time"]}"
+        puts "#{event['event_type']} starting #{event['date']}#{event['start_time']} end at #{event['end_time']}"
       end
     end
 
