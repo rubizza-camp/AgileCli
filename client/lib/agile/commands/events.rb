@@ -15,14 +15,22 @@ module Agile
     def list
       response = RestClient.get "#{CONFIG['current_remote']}/api/v1/events/"
       JSON.parse(response).each do |event|
-        start_time = DateTime.parse(event["start_time"]).strftime("%I:%M")
-        end_time = DateTime.parse(event["end_time"]).strftime("%I:%M")
-        date = DateTime.parse(event["date"]).strftime("%d %B")
-        puts "#{event['event_type']} starting #{date} at #{start_time} and end at #{end_time}"
+        info = parse_info(event)
+        puts "#{event['event_type']} starting #{info[:date]} at #{info[:start_time]} and end at #{info[:end_time]}"
       end
     end
 
     private
+
+    def parse_info(event)
+      { start_time: norm_time(event["start_time"]),
+        end_time: norm_time(event["end_time"]),
+        date: Date.parse(event["date"]).strftime("%d %B") }
+    end
+
+    def norm_time(param)
+      Time.parse(param).strftime("%I:%M")
+    end
 
     def type_cli
       cli = HighLine.new
