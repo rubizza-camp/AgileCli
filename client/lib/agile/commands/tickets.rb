@@ -12,10 +12,11 @@ module Agile
     end
 
     desc "list", "Tickets list"
+    # :reek:FeatureEnvy
     def list
       response = RestClient.get "#{CONFIG['current_remote']}/api/v1/tickets/"
       info = JSON.parse(response)
-      info.each {|ticket| puts ticket["name"] if ticket["project_id"] == CONFIG["current_project_id"]}
+      info.each { |ticket| puts ticket["name"] if ticket["project_id"] == CONFIG["current_project_id"] }
     end
 
     desc "show <name_ticket>", "Show ticket"
