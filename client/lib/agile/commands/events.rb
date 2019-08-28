@@ -7,7 +7,7 @@ module Agile
       RestClient.post"#{CONFIG['current_remote']}/api/v1/events/",
                      event_type: type_cli, desc: event_description, frequency: frequency_cli,
                      date: date_cli, time: time_cli, current_user: CONFIG["current_user"]
-      say "Successfully added new ticket!"
+      say "Successfully added new event!"
     end
 
     private
@@ -20,9 +20,7 @@ module Agile
 
     def frequency_cli
       cli = HighLine.new
-      say "0 - daily"
-      say "1 - weekly"
-      say "2 - monthly"
+      say "0 - daily\n1 - weekly\n2 - monthly\n3 - not regular"
       cli.ask("Choose frequency for event: ", Integer)
     end
 
