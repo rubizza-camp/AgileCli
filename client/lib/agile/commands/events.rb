@@ -16,16 +16,19 @@ module Agile
       response = RestClient.get "#{CONFIG['current_remote']}/api/v1/events/"
       JSON.parse(response).each do |event|
         info = parse_info(event)
-        puts "#{event['event_type']} starting #{info[:date]} at #{info[:start_time]} and end at #{info[:end_time]}"
+        puts "#{event['event_type']} starting #{parse_date(event)} at #{info[:start]} and end at #{info[:end]}"
       end
     end
 
     private
 
     def parse_info(event)
-      { start_time: norm_time(event["start_time"]),
-        end_time: norm_time(event["end_time"]),
-        date: Date.parse(event["date"]).strftime("%d %B") }
+      { start: norm_time(event["start_time"]),
+        end: norm_time(event["end_time"]) }
+    end
+
+    def parse_date(event)
+      Date.parse(event["date"]).strftime("%d %B")
     end
 
     def norm_time(param)
