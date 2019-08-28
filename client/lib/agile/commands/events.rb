@@ -14,11 +14,7 @@ module Agile
 
     def type_cli
       cli = HighLine.new
-      say "0 - sprint"
-      say "1 - scrum"
-      say "2 - retro"
-      say "3 - planning"
-      say "4 - review"
+      puts "0 - sprint\n1 - scrum\n2 - retro\n3 - planning\n4 - review"
       cli.ask("Choose type of event (select number): ", Integer)
     end
 
