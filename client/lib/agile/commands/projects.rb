@@ -91,11 +91,11 @@ module Agile
       info = JSON.parse(response).map(&:values)
       id_pr = info.map { |arr| arr[0] if arr[1] == project }
       id_pr.delete_if(&:nil?)
-      if info[1].include?(project)
+      if id_pr.empty?
+        say "Such project does not exist. Try again"
+      else
         write_to_config(id_pr, project)
         say "Your project: #{project}"
-      else
-        say "Such project does not exist. Try again"
       end
     end
 
