@@ -14,9 +14,12 @@ module Agile
     desc "list", "Show all events"
     def list
       response = RestClient.get "#{CONFIG['current_remote']}/api/v1/events/"
+      say "<<Project events>>"
       JSON.parse(response).each do |event|
-        info = parse_info(event)
-        puts "#{event['event_type']} starting #{parse_date(event)} at #{info[:start]} and end at #{info[:end]}"
+        if event["project_id"] == CONFIG["current_project_id"]
+          info = parse_info(event)
+          puts "#{event['event_type']} starting #{parse_date(event)} at #{info[:start]} and end at #{info[:end]}"
+        end
       end
     end
 
