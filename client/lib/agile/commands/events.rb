@@ -5,7 +5,7 @@ module Agile
       cli = HighLine.new
       event_description = cli.ask("description for event: ", String)
       RestClient.post"#{CONFIG['current_remote']}/api/v1/events/",
-                     event_type: type_cli, frequency: frequency_cli, date: date_cli,
+                     event_type: type_cli, freq: frequency_cli, date: date_cli,
                      start_time: start_time_cli, end_time: end_time_cli, desc: event_description,
                      current_user: CONFIG["current_user"]
       say "Successfully added new event!"
@@ -18,7 +18,7 @@ module Agile
       JSON.parse(response).each do |event|
         if event["project_id"] == CONFIG["current_project_id"]
           info = parse_info(event)
-          puts "#{event['event_type']} starting #{parse_date(event)} at #{info[:start]} and end at #{info[:end]}"
+          puts "#{(event['event_type']).upcase} starting #{parse_date(event)} at #{info[:start]} and end at #{info[:end]}"
         end
       end
     end
