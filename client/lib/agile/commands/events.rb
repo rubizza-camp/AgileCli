@@ -18,7 +18,7 @@ module Agile
       JSON.parse(response).each do |event|
         if event["project_id"] == CONFIG["current_project_id"]
           info = parse_info(event)
-          puts "#{(event['event_type']).upcase} starting #{parse_date(event)} at #{info[:start]} and end at #{info[:end]}"
+          say "#{(event['event_type']).upcase} starts at #{parse_date(event)} #{info[:start]} and ends at #{info[:end]}"
         end
       end
     end
@@ -44,7 +44,7 @@ module Agile
     end
 
     def parse_date(event)
-      Date.parse(event["date"]).strftime("%d %B")
+      Date.parse(event["date"]).strftime("%B %d")
     end
 
     def norm_time(param)
