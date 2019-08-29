@@ -3,7 +3,7 @@ module Agile
     desc "add <github_login>", "Add user in project"
     def add(login)
       RestClient.put"#{CONFIG['current_remote']}/api/v1/userproject/#{login}",
-                    project: CONFIG["current_project_id"], current_user: CONFIG["current_user"], new_user: login
+                    project: CONFIG["current_project"], current_user: CONFIG["current_user"], new_user: login
       say "Successfully added new user!"
     end
   end
