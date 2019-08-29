@@ -16,7 +16,7 @@ module Agile
       response = RestClient.get "#{CONFIG['current_remote']}/api/v1/tickets/"
       info = JSON.parse(response)
       say Rainbow("<<All tickets>>").cornflower
-      info.each { |ticket| puts_tickets(info) if ticket["project_id"] == CONFIG["current_project_id"] }
+      info.each { |ticket| puts ticket["name"] if ticket["project_id"] == CONFIG["current_project_id"] }
     end
 
     desc "show <name_ticket>", "Show ticket"
