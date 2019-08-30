@@ -50,9 +50,8 @@ module Agile
 
     desc "status <ticket>", "Update ticket status"
     def status(ticket)
-      status = ticket_status
       RestClient.put "#{CONFIG['current_remote']}/api/v1/tickets/#{ticket}",
-                     name: ticket, status: status, type: 3
+                     name: ticket, status: ticket_status, type: 3
       say "You take ticket #{ticket}"
     end
 
