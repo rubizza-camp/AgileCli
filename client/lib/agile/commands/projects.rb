@@ -19,10 +19,10 @@ module Agile
       response = RestClient.get "#{CONFIG['current_remote']}/api/v1/userproject/#{CONFIG['current_user']}"
       say Rainbow("<<Your Projects>>").cornflower
       JSON.parse(response).each do |proj|
-        if proj.first.values[1] == CONFIG["current_project"]
-          say "* #{proj.first.values[1]}"
+        if proj["name"] == CONFIG["current_project"]
+          say "* #{proj['name']}"
         else
-          say proj.first.values[1]
+          say proj["name"]
         end
       end
     end
@@ -46,7 +46,7 @@ module Agile
     def update(project)
       error_checking_projects
       choice = HighLine.new
-      answer = choice.ask("Choose what you need to edit : name or description (N or D): ", String)
+      answer = choice.ask("Choose what you want to edit: name or description (N or D): ", String)
       if answer == "N"
         update_name(project)
       elsif answer == "D"
@@ -56,25 +56,14 @@ module Agile
       end
     end
 
-    # def update(project, new_project)
-    #   error_checking_projects
-    #   resp = RestClient.get "#{CONFIG['current_remote']}/api/v1/userproject/#{CONFIG['current_user']}"
-    #   pr_list = JSON.parse(resp).map { |array| array.map { |hash| hash.values_at("name").include?(project) } }
-    #   if pr_list.include?([true])
-    #     RestClient.put "#{CONFIG['current_remote']}/api/v1/projects/#{project}", name: project, new_name: new_project
-    #     say "Updated from #{project} to #{new_project}"
-    #   else
-    #     say "Error"
-    #   end
-    # end
-
     private
 
     def update_name(project)
       choice = HighLine.new
       new_project = choice.ask("Enter new name of project: ", String)
       RestClient.put "#{CONFIG['current_remote']}/api/v1/projects/#{project}",
-                     name: project, new_name: new_project, type: 1
+                     name: project, new_name: new_project, type: 1,
+                     current_user: CONFIG["current_user"]
       say "Updated from #{project} to #{new_project}"
     end
 
@@ -82,7 +71,8 @@ module Agile
       choice = HighLine.new
       new_description = choice.ask("Enter new description for project: ", String)
       RestClient.put "#{CONFIG['current_remote']}/api/v1/projects/#{project}",
-                     name: project, new_description: new_description
+                     name: project, new_description: new_description,
+                     current_user: CONFIG["current_user"]
       say "Updated description to #{new_description}"
     end
 
@@ -99,7 +89,7 @@ module Agile
         say "Such project does not exist. Try again"
       else
         write_to_config(id_pr, project)
-        say "Your project: #{project}"
+        say "Your current project: #{project}"
       end
     end
 
