@@ -67,7 +67,9 @@ module Agile
     def update_name(ticket)
       choice = HighLine.new
       new_ticket = choice.ask("Enter new name of ticket: ", String)
-      RestClient.put "#{CONFIG['current_remote']}/api/v1/tickets/#{ticket}", name: ticket, new_name: new_ticket, type: 1
+      RestClient.put "#{CONFIG['current_remote']}/api/v1/tickets/#{ticket}",
+                      name: ticket, new_name: new_ticket, type: 1,
+                      user: CONFIG["current_user"]
       say "Updated from #{ticket} to #{new_ticket}"
     end
 
@@ -75,7 +77,8 @@ module Agile
       choice = HighLine.new
       new_description = choice.ask("Enter new description of ticket: ", String)
       RestClient.put "#{CONFIG['current_remote']}/api/v1/tickets/#{ticket}",
-                     name: ticket, new_description: new_description
+                     name: ticket, new_description: new_description,
+                     user: CONFIG["current_user"]
       say "Updated description to #{new_description}"
     end
   end

@@ -62,7 +62,8 @@ module Agile
       choice = HighLine.new
       new_project = choice.ask("Enter new name of project: ", String)
       RestClient.put "#{CONFIG['current_remote']}/api/v1/projects/#{project}",
-                     name: project, new_name: new_project, type: 1
+                     name: project, new_name: new_project, type: 1,
+                     current_user: CONFIG["current_user"]
       say "Updated from #{project} to #{new_project}"
     end
 
@@ -70,7 +71,8 @@ module Agile
       choice = HighLine.new
       new_description = choice.ask("Enter new description for project: ", String)
       RestClient.put "#{CONFIG['current_remote']}/api/v1/projects/#{project}",
-                     name: project, new_description: new_description
+                     name: project, new_description: new_description,
+                     current_user: CONFIG["current_user"]
       say "Updated description to #{new_description}"
     end
 
