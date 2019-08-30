@@ -7,7 +7,7 @@ module Agile
       ticket_description = cli.ask("description for ticket: ", String)
       RestClient.post"#{CONFIG['current_remote']}/api/v1/tickets/",
                      project_id: CONFIG["current_project_id"], name: ticket_name,
-                     user: CONFIG["current_user"], desc: ticket_description
+                     user: CONFIG["current_user"], desc: ticket_description, status: ticket_status
       say "Successfully added new ticket!"
     end
 
@@ -15,7 +15,6 @@ module Agile
     def list
       response = RestClient.get "#{CONFIG['current_remote']}/api/v1/tickets/"
       info = JSON.parse(response)
-      say Rainbow("<<All tickets>>").cornflower
       info.each { |ticket| puts ticket["name"] if ticket["project_id"] == CONFIG["current_project_id"] }
     end
 
@@ -25,6 +24,7 @@ module Agile
       row = JSON.parse(response)
       say "Ticket: #{row['data']['attributes']['name']}"
       say "Description: #{row['data']['attributes']['description']}"
+      say "Status: #{row['data']['attributes']['status']}"
     end
 
     desc "update <ticket>", "update ticket"
@@ -60,8 +60,10 @@ module Agile
     # end
     private
 
-    def puts_tickets(info)
-      info.each { |ticket| puts ticket["name"] }
+    def ticket_status
+      cli = HighLine.new
+      puts "0 - ToDo\n1 - Review\n2 - In progress\n3 - Merged\n4 - Done\n5 - Archived"
+      cli.ask("Choose type of event (select number): ", Integer)
     end
 
     def update_name(ticket)
