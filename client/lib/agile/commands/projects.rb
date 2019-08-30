@@ -20,7 +20,7 @@ module Agile
       say Rainbow("<<Your Projects>>").cornflower
       JSON.parse(response).each do |proj|
         if proj["name"] == CONFIG["current_project"]
-          say "* #{proj["name"]}"
+          say "* #{proj['name']}"
         else
           say proj["name"]
         end

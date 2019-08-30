@@ -7,7 +7,7 @@ module Agile
       say "Successfully added new user!"
     end
 
-    desc "role <github_login>", "Assign role to a user"    
+    desc "role <github_login>", "Assign role to a user"
     def role(login)
       RestClient.put"#{CONFIG['current_remote']}/api/v1/users/#{login}",
                     project_id: CONFIG["current_project_id"], name: login, role_id: role_type
