@@ -48,6 +48,14 @@ module Agile
       say "You take ticket #{ticket}"
     end
 
+    desc "status <ticket>", "Update ticket status"
+    def status(ticket)
+      status = ticket_status
+      RestClient.put "#{CONFIG['current_remote']}/api/v1/tickets/#{ticket}",
+                     name: ticket, status: status, type: 3
+      say "You take ticket #{ticket}"
+    end
+
     # desc "my_list", "Your tickets list"
     # def my_list
     #   CONFIG["tickets"].each do |name|
@@ -63,7 +71,7 @@ module Agile
     def ticket_status
       cli = HighLine.new
       puts "0 - ToDo\n1 - Review\n2 - In progress\n3 - Merged\n4 - Done\n5 - Archived"
-      cli.ask("Choose type of event (select number): ", Integer)
+      cli.ask("Choose status of ticket (select number): ", Integer)
     end
 
     def update_name(ticket)
