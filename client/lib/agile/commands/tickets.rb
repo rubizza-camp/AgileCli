@@ -25,6 +25,8 @@ module Agile
       row = JSON.parse(response)
       say "Ticket: #{row['data']['attributes']['name']}"
       say "Description: #{row['data']['attributes']['description']}"
+      say "Status: #{row['data']['attributes']['status']}"
+      say "Owner: #{row['data']['attributes']['owner']}"
     end
 
     desc "update <ticket>", "update ticket"
@@ -40,14 +42,13 @@ module Agile
       end
     end
 
-    # desc "take <ticket>", "Take ticket"
-    # def take(ticket)
-    #   # call api to take ticket
-    #   CONFIG["tickets"].push(ticket)
-    #   File.write("#{GEM_PATH}.config.json", JSON.generate(CONFIG))
-    #   puts "you take ticket"
-    # end
-    #
+    desc "take <ticket>", "Take ticket"
+    def take(ticket)
+      RestClient.put "#{CONFIG['current_remote']}/api/v1/tickets/#{ticket}",
+                     name: ticket, user: CONFIG["current_user"], type: 2
+      say "You take ticket #{ticket}"
+    end
+
     # desc "my_list", "Your tickets list"
     # def my_list
     #   CONFIG["tickets"].each do |name|
