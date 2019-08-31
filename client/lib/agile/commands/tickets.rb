@@ -15,7 +15,7 @@ module Agile
     def list
       response = RestClient.get "#{CONFIG['current_remote']}/api/v1/tickets/"
       info = JSON.parse(response)
-      info.each { |ticket| puts ticket["name"] if ticket["project_id"] == CONFIG["current_project_id"] }
+      print_tickets_list(info)
     end
 
     desc "show <name_ticket>", "Show ticket"
@@ -61,16 +61,6 @@ module Agile
       end
     end
 
-    # desc "my_list", "Your tickets list"
-    # def my_list
-    #   CONFIG["tickets"].each do |name|
-    #     if name == CONFIG["tickets"]
-    #       say "* #{name}"
-    #     else
-    #       say name
-    #     end
-    #   end
-    # end
     private
 
     def output_ticket(row)
@@ -86,7 +76,7 @@ module Agile
 
     def ticket_status
       cli = HighLine.new
-      puts "0 - ToDo\n1 - Review\n2 - In progress\n3 - Merged\n4 - Done\n5 - Archived"
+      puts "0 - ToDo\n1 - Review\n2 - Merged\n3 - In progress\n4 - Done\n5 - Archived"
       cli.ask("Choose status of ticket (select number): ", Integer)
     end
 
@@ -106,6 +96,89 @@ module Agile
                      name: ticket, new_description: new_description,
                      user: CONFIG["current_user"]
       say "Updated description to #{new_description}"
+    end
+
+    def print_arr_to_do(arr)
+      @s_to_do = ""
+      arr.each do |element|
+        @s_to_do += element.to_s + "\n"
+      end
+    end
+
+    def print_arr_review(arr)
+      @s_review = ""
+      arr.each do |element|
+        @s_review += element.to_s + "\n"
+      end
+    end
+
+    def print_arr_merged(arr)
+      @s_merged = ""
+      arr.each do |element|
+        @s_merged += element.to_s + "\n"
+      end
+    end
+
+    def print_arr_in_progress(arr)
+      @s_in_progress = ""
+      arr.each do |element|
+        @s_in_progress += element.to_s + "\n"
+      end
+    end
+
+    def print_arr_done(arr)
+      @s_done = ""
+      arr.each do |element|
+        @s_done += element.to_s + "\n"
+      end
+    end
+
+    def tickets_to_arrays(my_tickets)
+      @to_do = []
+      @review = []
+      @merged = []
+      @in_progress = []
+      @done = []
+
+      my_tickets.each do |ticket|
+        case ticket["status"]
+        when "todo"
+          @to_do.push(ticket["name"])
+        when "review"
+          @review.push(ticket["name"])
+        when "merged"
+          @merged.push(ticket["name"])
+        when "in_progress"
+          @in_progress.push(ticket["name"])
+        when "done"
+          @done.push(ticket["name"])
+        end
+      end
+    end
+
+    def parse_tickets(all_tickets)
+      my_tickets = []
+      all_tickets.each { |ticket| my_tickets << ticket if ticket["project_id"] == CONFIG["current_project_id"] }
+      tickets_to_arrays(my_tickets)
+    end
+
+    def print_all_arrays
+      print_arr_to_do(@to_do)
+      print_arr_review(@review)
+      print_arr_merged(@merged)
+      print_arr_in_progress(@in_progress)
+      print_arr_done(@done)
+    end
+
+    def print_tickets_list(all_tickets)
+      parse_tickets(all_tickets)
+      print_all_arrays
+      table = Terminal::Table.new do |t|
+        t.title = CONFIG["current_project"]
+        t.headings = ["todo", "review", "merged", "in_progress", "done"]
+        t.rows = [[@s_to_do, @s_review, @s_merged, @s_in_progress, @s_done]]
+      end
+      say table
     end
   end
 
