@@ -95,7 +95,7 @@ module Agile
       new_ticket = choice.ask("Enter new name of ticket: ", String)
       RestClient.put "#{CONFIG['current_remote']}/api/v1/tickets/#{ticket}",
                      name: ticket, new_name: new_ticket, type: 1,
-                     user: CONFIG["current_user"]
+                     user: CONFIG["current_user"], project_id: CONFIG["current_project_id"]
       say "Updated from #{ticket} to #{new_ticket}"
     end
 
