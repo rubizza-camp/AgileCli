@@ -22,10 +22,7 @@ module Agile
     def show(ticket)
       response = RestClient.get "#{CONFIG['current_remote']}/api/v1/tickets/#{ticket}"
       row = JSON.parse(response)
-      say "Ticket: #{row['data']['attributes']['name']}"
-      say "Description: #{row['data']['attributes']['description']}"
-      say "Status: #{row['data']['attributes']['status']}"
-      say "Owner: #{row['data']['attributes']['owner']}"
+      output_ticket(row["data"]["attributes"])
     end
 
     desc "update <ticket>", "update ticket"
@@ -51,8 +48,17 @@ module Agile
     desc "status <ticket>", "Update ticket status"
     def status(ticket)
       RestClient.put "#{CONFIG['current_remote']}/api/v1/tickets/#{ticket}",
-                     name: ticket, status: ticket_status, type: 3
+                     name: ticket, status: ticket_status, type: 3, project_id: CONFIG["current_project_id"]
       say "You take ticket #{ticket}"
+    end
+
+    desc "archive", "View archived tickets"
+    def archive
+      response = RestClient.get "#{CONFIG['current_remote']}/api/v1/tickets/"
+      info = JSON.parse(response)
+      info.each do |ticket|
+        archive_ticket(ticket) if ticket["project_id"] == CONFIG["current_project_id"] && ticket["status"] == "archived"
+      end
     end
 
     # desc "my_list", "Your tickets list"
@@ -66,6 +72,17 @@ module Agile
     #   end
     # end
     private
+
+    def output_ticket(row)
+      say "Ticket: #{row['name']}"
+      say "Description: #{row['description']}"
+      say "Status: #{row['status']}"
+      say "Owner: #{row['owner']}"
+    end
+
+    def archive_ticket(ticket)
+      say ticket["name"]
+    end
 
     def ticket_status
       cli = HighLine.new
