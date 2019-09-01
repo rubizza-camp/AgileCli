@@ -4,6 +4,7 @@ module Agile
   class Tickets < Thor
     desc "create <ticket>", "Add new ticket"
     def create(ticket)
+      error_checking_tickets
       ticket_name = ticket
       cli = HighLine.new
       ticket_description = cli.ask("description for ticket: ", String)
@@ -15,6 +16,7 @@ module Agile
 
     desc "list", "Tickets list"
     def list
+      error_checking_tickets
       response = RestClient.get "#{CONFIG['current_remote']}/api/v1/tickets/"
       info = JSON.parse(response)
       print_tickets_list(info)
@@ -22,6 +24,7 @@ module Agile
 
     desc "my_list", "Tickets list"
     def my_list
+      error_checking_tickets
       response = RestClient.get "#{CONFIG['current_remote']}/api/v1/tickets/"
       owner = []
       JSON.parse(response).each { |ticket| owner << ticket if ticket["owner"] == CONFIG["current_user"] }
@@ -30,6 +33,7 @@ module Agile
 
     desc "show <name_ticket>", "Show ticket"
     def show(ticket)
+      error_checking_tickets
       response = RestClient.get "#{CONFIG['current_remote']}/api/v1/tickets/#{ticket}"
       row = JSON.parse(response)
       output_ticket(row["data"]["attributes"])
@@ -37,6 +41,7 @@ module Agile
 
     desc "update <ticket>", "update ticket"
     def update(ticket)
+      error_checking_tickets
       choice = HighLine.new
       answer = choice.ask("Choose what you need to edit : name or description (N or D): ", String)
       if answer == "N"
@@ -50,6 +55,7 @@ module Agile
 
     desc "take <ticket>", "Take ticket"
     def take(ticket)
+      error_checking_tickets
       RestClient.put "#{CONFIG['current_remote']}/api/v1/tickets/#{ticket}",
                      name: ticket, user: CONFIG["current_user"], type: 2
       say "You take ticket #{ticket}"
@@ -57,6 +63,7 @@ module Agile
 
     desc "status <ticket>", "Update ticket status"
     def status(ticket)
+      error_checking_tickets
       RestClient.put "#{CONFIG['current_remote']}/api/v1/tickets/#{ticket}",
                      name: ticket, status: ticket_status, type: 3, project_id: CONFIG["current_project_id"]
       say "You take ticket #{ticket}"
@@ -64,6 +71,7 @@ module Agile
 
     desc "archive", "View archived tickets"
     def archive
+      error_checking_tickets
       response = RestClient.get "#{CONFIG['current_remote']}/api/v1/tickets/"
       info = JSON.parse(response)
       info.each do |ticket|
@@ -72,6 +80,12 @@ module Agile
     end
 
     private
+
+    def error_checking_tickets
+      abort "You haven't done init yet!" unless CONFIG["current_remote"]
+      abort "Please, log in!" unless CONFIG["current_user"]
+      abort "Please, choose a project to work with!" unless CONFIG["current_project"]
+    end
 
     def output_ticket(row)
       say "Ticket: #{row['name']}"
