@@ -20,6 +20,14 @@ module Agile
       print_tickets_list(info)
     end
 
+    desc "my_list", "Tickets list"
+    def my_list
+      response = RestClient.get "#{CONFIG['current_remote']}/api/v1/tickets/"
+      owner = []
+      JSON.parse(response).each { |ticket| owner << ticket if ticket["owner"] == CONFIG["current_user"] }
+      print_tickets_list(owner)
+    end
+
     desc "show <name_ticket>", "Show ticket"
     def show(ticket)
       response = RestClient.get "#{CONFIG['current_remote']}/api/v1/tickets/#{ticket}"
