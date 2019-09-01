@@ -1,3 +1,6 @@
+# :reek:TooManyInstanceVariables
+# :reek:FeatureEnvy
+
 module Agile
   class Tickets < Thor
     desc "create <ticket>", "Add new ticket"
@@ -175,7 +178,7 @@ module Agile
       print_all_arrays
       table = Terminal::Table.new do |tbl|
         tbl.title = CONFIG["current_project"]
-        tbl.headings = ["todo", "review", "merged", "in_progress", "done"]
+        tbl.headings = %w(todo review merged in_progress done)
         tbl.rows = [[@s_to_do, @s_review, @s_merged, @s_in_progress, @s_done]]
       end
       say table
