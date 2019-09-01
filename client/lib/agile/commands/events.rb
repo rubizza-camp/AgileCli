@@ -2,6 +2,7 @@ module Agile
   class Events < Thor
     desc "create", "Add new event"
     def create
+      error_checking_events
       cli = HighLine.new
       event_description = cli.ask("description for event: ", String)
       RestClient.post"#{CONFIG['current_remote']}/api/v1/events/",
@@ -13,6 +14,7 @@ module Agile
 
     desc "list", "Show all events"
     def list
+      error_checking_events
       response = RestClient.get "#{CONFIG['current_remote']}/api/v1/events/"
       say "<<Project events>>"
       JSON.parse(response).each do |event|
@@ -26,11 +28,18 @@ module Agile
     desc "show <date (yyyy-mm-dd)>", "Show event"
     # :reek:ControlParameter
     def show(date)
+      error_checking_events
       response = RestClient.get "#{CONFIG['current_remote']}/api/v1/events/"
       JSON.parse(response).each { |event| puts_info(event) if event["date"] == date }
     end
 
     private
+
+    def error_checking_events
+      abort "You haven't done init yet!" unless CONFIG["current_remote"]
+      abort "Please, log in!" unless CONFIG["current_user"]
+      abort "Please, choose a project to work with!" unless CONFIG["current_project"]
+    end
 
     def puts_info(event)
       say "Type of event: #{event['event_type']}\nDescription: #{event['description']}"
