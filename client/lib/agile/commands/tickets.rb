@@ -173,10 +173,10 @@ module Agile
     def print_tickets_list(all_tickets)
       parse_tickets(all_tickets)
       print_all_arrays
-      table = Terminal::Table.new do |t|
-        t.title = CONFIG["current_project"]
-        t.headings = ["todo", "review", "merged", "in_progress", "done"]
-        t.rows = [[@s_to_do, @s_review, @s_merged, @s_in_progress, @s_done]]
+      table = Terminal::Table.new do |tbl|
+        tbl.title = CONFIG["current_project"]
+        tbl.headings = ["todo", "review", "merged", "in_progress", "done"]
+        tbl.rows = [[@s_to_do, @s_review, @s_merged, @s_in_progress, @s_done]]
       end
       say table
     end
