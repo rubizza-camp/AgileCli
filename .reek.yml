@@ -16,3 +16,6 @@ detectors:
 
   TooManyStatements:
     enabled: false
+
+  TooManyInstanceVariables:
+    enabled: false
