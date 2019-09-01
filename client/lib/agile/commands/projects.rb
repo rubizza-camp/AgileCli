@@ -1,4 +1,3 @@
-# :reek:Lint/Syntax
 module Agile
   class Projects < Thor
     desc "create <project>", "Create new project"
