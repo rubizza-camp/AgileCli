@@ -1,4 +1,3 @@
-# :reek:TooManyInstanceVariables
 # :reek:FeatureEnvy
 
 module Agile
@@ -136,6 +135,7 @@ module Agile
       end
     end
 
+    # rubocop:disable Metrics/MethodLength
     def tickets_to_arrays(my_tickets)
       @to_do = []
       @review = []
@@ -158,6 +158,7 @@ module Agile
         end
       end
     end
+    # rubocop:enable Metrics/MethodLength
 
     def parse_tickets(all_tickets)
       my_tickets = []
@@ -178,7 +179,7 @@ module Agile
       print_all_arrays
       table = Terminal::Table.new do |tbl|
         tbl.title = CONFIG["current_project"]
-        tbl.headings = %w(todo review merged in_progress done)
+        tbl.headings = %w[todo review merged in_progress done]
         tbl.rows = [[@s_to_do, @s_review, @s_merged, @s_in_progress, @s_done]]
       end
       say table
