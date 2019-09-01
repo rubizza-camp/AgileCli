@@ -8,7 +8,7 @@ module Agile
       RestClient.post"#{CONFIG['current_remote']}/api/v1/events/",
                      event_type: type_cli, date: date_cli, start_time: start_time_cli,
                      end_time: end_time_cli, desc: event_description,
-                     current_user: CONFIG["current_user"]
+                     current_user: CONFIG["current_user"], project_id: CONFIG["current_project_id"]
       say "Successfully added new event!"
     end
 
